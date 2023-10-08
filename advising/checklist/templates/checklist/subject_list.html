@@ -1,0 +1,16 @@
+{% extends 'checklist/base.html' %} {% block content %}
+
+<div class="text-center">
+  <h1>Subject List</h1>
+</div>
+<div>
+<ul class="list-group-item">
+  {% for subject in subjects %}
+  <li class="list-group-item p-2 pb-3">
+    <li><span>Subject Code: </span><span>{{subject.subject_abbrev}}</span></li>
+    <li><span>Subject Name: </span><span>{{subject.subject_name}}</span></li>
+  </li>
+  {% endfor %}
+</ul>
+</div>
+{% endblock %}

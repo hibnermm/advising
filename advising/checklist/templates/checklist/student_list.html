@@ -1,0 +1,19 @@
+{% extends 'checklist/base.html' %} {% block content %}
+
+<div class="text-center">
+  <h1>Student List</h1>
+</div>
+<div>
+<ul class="list-group-item">
+  {% for student in students %}
+  <li class="list-group-item p-2 pb-3">
+    <li><span>First Name: </span><span>{{student.first_name}}</span></li>
+    <li><span>Last Name: </span><span>{{student.last_name}}</span></li>
+    <li><span>Phone: </span> <span>{{student.phone}}</span></li>
+    <li><span>Email: </span><span>{{student.email}}</span></li> 
+    <li><span>School ID: </span><span>{{student.school_id}}</span></li>
+  </li>
+  {% endfor %}
+</ul>
+</div>
+{% endblock %}
