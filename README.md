@@ -7,11 +7,12 @@ _This project consists of a template advising checklist_
 
 ## User Stories
 Admission advisors want to:
-- make changes to core and elective *courses* for each degree checklist quickly so they can allocate time to other tasks
+- view *degree* checklists quickly so they can respond to impromptu advising inquiries
+- make changes to requirements, as well as core and elective *courses* for each degree checklist quickly so they can allocate time to other tasks
 - create new certification and *degree* checklists so they can provide quick turnover to department heads and dean/s
 - receive an example course planning *guide* that automatically considers prerequisites and regularly scheduled course offerings to increase their bandwidth for other tasks 
 - share an example course planning guide for the semester to help their advisees and serve as an aide during advising appointments which will help guide their discussion
-- quickly identify if students’ transfer courses are eligible substitutions, upload students’ completed coursework, and receive individualized course plans to help facilitate advising discussions
+- quickly identify if students’ transfer courses are eligible substitutions, receive uploads of students’ completed coursework, and create individualized course plans to help facilitate advising discussions
 
 
 ## Technologies Used
