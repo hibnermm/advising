@@ -17,8 +17,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 import checklist.views
+from .models import DegreeField
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', checklist.views.index),
+    path('search/', checklist.views.search, name='search'),
+    path('', include('checklist.urls'))
 ]
+
+
