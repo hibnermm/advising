@@ -1,0 +1,23 @@
+{% extends 'checklist/base.html' %} {% block content %}
+
+<div class="text-center">
+  <h1>Degree List</h1>
+</div>
+<div class="container-fluid">
+<ul class="list-group-item">
+  {% for degree in degrees %}
+
+  <li class="list-group-item p-2 pb-3">
+
+    <li><span>Degree Name: </span> <span>{{degree.degree_name}}</span></li>
+    <li><span>Degree Abbreviation: </span> <span>{{degree.degree_abbrev}}</span></li>
+    <li><span>College Name: </span> <span>{{degree.college.college_name}}</span></li>
+    <li><span>Department Name: </span> <span>{{department.dept_name}}</span></li>
+    <li><span>Field Name: </span> <span>{{field.field_name}}</span></li>
+    <li><span>Field Abbreviation: </span> <span>{{field.field_abbrev}}</span></li>
+  </li>
+  {% endfor %}
+
+</ul>
+</div>
+{% endblock %}
