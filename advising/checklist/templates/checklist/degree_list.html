@@ -5,16 +5,23 @@
 </div>
 <div class="container-fluid">
 <ul class="list-group-item">
-  {% for degree in degrees %}
-
+  {% for training in trainings %}
   <li class="list-group-item p-2 pb-3">
+    <li><span>Degree Name: </span> <span>{{training.name}}</span></li>
+    <li><span>Degree Abbreviation: </span> <span>{{training.abbrev}}</span></li>
+  </li>
+  {% endfor %}
 
-    <li><span>Degree Name: </span> <span>{{degree.degree_name}}</span></li>
-    <li><span>Degree Abbreviation: </span> <span>{{degree.degree_abbrev}}</span></li>
-    <li><span>College Name: </span> <span>{{degree.college.college_name}}</span></li>
-    <li><span>Department Name: </span> <span>{{department.dept_name}}</span></li>
-    <li><span>Field Name: </span> <span>{{field.field_name}}</span></li>
-    <li><span>Field Abbreviation: </span> <span>{{field.field_abbrev}}</span></li>
+  {% for dept in depts %}
+  <li class="list-group-item p-2 pb-3">
+    <li><span>Department Name: </span> <span>{{dept.name}}</span></li>
+  </li>
+  {% endfor %}
+
+  {% for field in fields %}
+  <li class="list-group-item p-2 pb-3">
+    <li><span>Field Name: </span> <span>{{field.name}}</span></li>
+    <li><span>Field Abbreviation: </span> <span>{{field.abbrev}}</span></li>
   </li>
   {% endfor %}
 
