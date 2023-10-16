@@ -12,17 +12,22 @@ def degree_search(request):
 def degree_list(request):
   trainings= TrainingLevel.objects.all()
   fields = Field.objects.all()
-  depts = Department.objects.all()
+  reqtypes = ReqType.objects.all()
+  courses = Courses.objects.all()
+
   context = {
         'trainings': trainings,
         'fields': fields,
-        'depts': depts
     }
   return render(request, 'checklist/degree_list.html', context)
+
 """
+?How to access data if no FK on model?
 field = Field.objects.all()
 field.get(name__contains="computer")   #where %like%
-field.filter(dept__name="Department of Life, Earth and Environmental Sciences")   #spans relationships
-field.filter(department__name="Department of Life, Earth and Environmental Sciences")     #doesn't work
+field.filter(dept__name="Department of Life, Earth and Environmental Sciences")   #spans relationships, need to name FK model as on primary model
 field.filter(traininglevels__abbrev="BBA")    #works
+
+course.get.selectrelated().get(prereqs).values()  #doesn't work
+courses.prereqs.all() #doesn't work, no attribute named 'prereq'
 """

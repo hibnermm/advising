@@ -14,6 +14,16 @@ Admission advisors want to:
 - share an example course planning guide for the semester to help their advisees and serve as an aide during advising appointments which will help guide their discussion
 - quickly identify if students’ transfer courses are eligible substitutions, receive uploads of students’ completed coursework, and create individualized course plans to help facilitate advising discussions
 
+## Diagrams
+
+This conceptual diagram illustrates the many-to-many relationship between training level and field, requirement and type, courses and prerequisites and courses, and one-to-many relationship between department and subject, and course and equivalent transfer courses.
+![conceptual diagram](/img/conceptual_erd.jpg)
+
+This logical diagram illustrates a more detailed representation of attributes found in each entity, along with an intermediary weak entity of student_course.
+![logical diagram](/img/logical_erd2.jpg)
+
+This physical diagram builds upon the prior diagrams and includes specific data types, such as date, integer, boolean, and string character length.
+![physical diagram](/img/physical_erd3.jpg)
 
 ## Technologies Used
 - Django
