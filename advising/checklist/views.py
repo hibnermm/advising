@@ -12,12 +12,18 @@ def degree_search(request):
 def degree_list(request):
   trainings= TrainingLevel.objects.all()
   fields = Field.objects.all()
-  reqtypes = ReqType.objects.all()
-  courses = Courses.objects.all()
+  
+  for course in courses:
+    courses = Course.objects.all()
+    course_list = [ ]
+    prereq = course.prereq_set.all()
+    course_list.append({'course': course, 
+                        'prereq': prereq})
 
   context = {
         'trainings': trainings,
         'fields': fields,
+        'course_list': course_list
     }
   return render(request, 'checklist/degree_list.html', context)
 
