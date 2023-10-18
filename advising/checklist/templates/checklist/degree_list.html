@@ -12,11 +12,11 @@
   </li>
   {% endfor %}
 
-  {% for dept in depts %}    <!--this data isn't showing up-->
-  <li class="list-group-item p-2 pb-3">
-    <li><span>Department Name: </span> <span>{{dept.name}}</span></li>
-  </li>
-  {% endfor %}
+    {% for dept in trainings.dept_set.all %}    <!--this data isn't showing up-->
+    <li class="list-group-item p-2 pb-3">
+      <li><span>Department Name: </span> <span>{{dept.name}}</span></li>
+    </li>
+    {% endfor %}
 
   {% for field in fields %}
   <li class="list-group-item p-2 pb-3">
@@ -25,12 +25,14 @@
   </li>
   {% endfor %}
 
+ <!--
   {% for c in course_list %}
   <li class="list-group-item p-2 pb-3">
     <li><span>Course Name: </span> <span>{{course_list.name}}</span></li>
     <li><span>Course Prerequisite: </span> <span>{{course_list.prereq.name}}</span></li>
   </li>
   {% endfor %}
+-->
 
 </ul>
 </div>

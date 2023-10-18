@@ -1,5 +1,5 @@
 from django.contrib import admin
-from checklist.models import (Department, Subject, Field, TrainingLevel, Requirement, Course, Semester)
+from checklist.models import (Department, Subject, Field, TrainingLevel, Requirement, Course, Semester, CourseSched)
 
 # Register your models here.
 admin.site.register(Department)
@@ -9,6 +9,7 @@ admin.site.register(TrainingLevel)
 admin.site.register(Requirement)
 admin.site.register(Course)
 admin.site.register(Semester)
+admin.site.register(CourseSched)
 
 """
 class FieldInLine(admin.TabularInline):

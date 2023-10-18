@@ -69,7 +69,9 @@ class Course(models.Model):
   prereqs = models.ManyToManyField('Prereq', through='CoursePrereq')
   semesters = models.ManyToManyField("Semester", through="CourseSched")
   def __str_(self):
-    return "{} {}: {}".format(self.subject.__str__(), self.no, self.name)
+    return "{} {}".format(self.no, self.name)
+
+    #doesn't work "{}_{}: {}".format(self.subject.__str__(), self.no, self.name)
 
 class ReqCourse(models.Model):
   reqtype = models.ForeignKey(ReqType,on_delete=models.CASCADE)    
