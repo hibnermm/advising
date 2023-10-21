@@ -17,13 +17,13 @@ Admission advisors want to:
 ## Diagrams
 
 This conceptual diagram illustrates the relations between degree, requirement, programcourses, course, and prerequisite.
-![conceptual diagram](/img/erd_20231015_conceptual.jpg)
+![conceptual diagram](/img/erd_20231015_conceptual.png)
 
 This logical diagram illustrates a more detailed representation of attributes found in each entity.
-![logical diagram](/img/erd_20231015_logical.jpg)
+![logical diagram](/img/erd_20231015_logical.png)
 
 This physical diagram builds upon the prior diagrams and includes specific data types, such as date, integer, boolean, and string character length.
-![physical diagram](/img/erd_20231015_physical.jpg)
+![physical diagram](/img/erd_20231015_physical.png)
 
 ## Technologies Used
 - Django
