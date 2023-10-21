@@ -1,0 +1,39 @@
+{% extends 'checklist/base.html' %} {% block content %}
+
+<div class="text-center">
+  <h1>Program Information</h1>
+</div>
+
+<div class="container-fluid text-center">
+  {% for degree in degrees %}
+  <h2>{{degree.level_abbrev}}-{{degree.major}}</h2>
+  {% endfor %}
+</div>
+
+<div class="container-fluid">
+  <h3>Courses</h3>
+<ul class="list-group-item">
+  {% for course in courses %}
+  <li class="list-group-item p-2 pb-3">
+    <li><span>Subject: </span> <span>{{course.subj_abbrev}}</span></li>
+    <li><span>Course No.: </span> <span> {{course.no}}</span></li>
+    <li><span>Course Name.: </span> <span> {{course.name}}</span></li>     <li><span>Prerequisite: {{course.prerequisite_set.get.name}}</span></li>
+  </li>
+  {% endfor %}
+</ul>
+</div>
+
+
+<div class="container-fluid">
+  <h3>Requirements</h3>
+<ul class="list-group-item">
+  {% for requirement in requirements %}   
+  <li class="list-group-item p-2 pb-3">
+    <li><span>Requirement: </span> <span>{{requirement.req}}</span></li>
+    {% if requirement.reqtype %}
+    <li><span>Requirement type: </span> <span>{{requirement.reqtype}}</span></li>
+    {% endif %}
+  {% endfor %}
+</ul>
+</div>
+{% endblock %}
