@@ -23,7 +23,6 @@ class Requirement(models.Model):
     return "{}  {}".format(self.req, self.reqtype)
 
 
-
 class Course(models.Model):
   subj_abbrev = models.CharField(verbose_name="Subject abbreviation", max_length=200)          
   no = models.IntegerField(verbose_name="Course number")
@@ -31,12 +30,14 @@ class Course(models.Model):
   hours = models.IntegerField(verbose_name="Course credit hours")
   reqs = models.ManyToManyField('Requirement', verbose_name="Requirement", through='ProgramCourses')
   def __str__(self):
-    return "{} {}: {}".format(self.no, self.subj_abbrev, self.name)
+    return "{} {}: {}".format(self.subj_abbrev, self.no, self.name)
 
 class ProgramCourses(models.Model):
   reqs = models.ForeignKey(Requirement, verbose_name = "Requirements",on_delete=models.CASCADE)    
   courses = models.ForeignKey(Course, on_delete=models.CASCADE)
   completed = models.BooleanField(verbose_name="Course completion status", null=True)
+  def __str__(self):
+    return "{} - {}".format(self.reqs, self.courses)
 
 
 class Prerequisite(models.Model):
@@ -45,6 +46,6 @@ class Prerequisite(models.Model):
   name = models.CharField(verbose_name="Course name", max_length=200)   
   hours = models.IntegerField(verbose_name="Course credit hours")
   course = models.ForeignKey(Course, on_delete=models.CASCADE)
-  def __str_(self):
+  def __str__(self):
     return "{} {}: {}".format(self.subj_abbrev, self.no, self.name)
 
