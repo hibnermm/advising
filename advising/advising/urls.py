@@ -20,7 +20,7 @@ import checklist.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', checklist.views.index),
-    path('search/', checklist.views.program_search, name='program_search'),
+    path('', checklist.views.index, name='index'),
+    path('search/', checklist.views.program_search, name='search'),
     path('', include('checklist.urls'))
 ]

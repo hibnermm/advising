@@ -1,3 +1,120 @@
 {% extends 'checklist/base.html' %} {% block content %}
-<h2>Search Results for <em>{{ search_text }}</em></h1>
-{% endblock %}
+
+<div class="text-center">
+  <h1>Program Details</h1>
+</div>
+
+<div class="container-fluid text-center">
+  {% for degree in degrees %}
+  <h2>{{degree.level_abbrev}}-{{degree.major}}</h2>
+  {% endfor %}
+</div>
+
+<div class="container-fluid">
+<form method="get">
+<label for="sort">Sort</label>
+<select name="sort_by" id="sort_by">
+  <option value="requirement" {% if sort_by=="requirement" %}selected {% endif %}>Requirement</option>
+  <option value="course" {% if sort_by=="course" %}selected {% endif %}>Course</option>
+  <option value="prerequisite" {% if sort_by=="prerequisite" %}selected {% endif %}>Prerequisite</option>
+</select>
+<button type="submit">Sort</button>
+</form>
+
+<div class="column">
+  <h2>Requirements</h2>
+  <ul>{% for requirement in requirements %}
+  <li>{{requirement.req}} {{ requirement.type }}</li>
+  {% endfor %}</ul>
+</div>
+
+<div class="column">
+  <h2>Courses</h2>
+  <ul>{% for course in courses %}
+  <li>{{course.subj_abbrev}} {{course.no}} </li>{% endfor %}
+  </ul>
+</div>
+
+<div class="column">
+  <h2>Prerequisites</h2>
+  <ul>{% for prerequisite in prerequisites %}
+  <li>{{prerequisite.prerequisite_course.subj_abbrev}} {{prerequisite.prerequisite_course.no}} for {{prerequisite.course.subj_abbrev}} {{prerequisite.course.no}}</li>
+      {% endfor %}
+  </ul>
+</div>
+    {% endblock %}
+
+    <br />
+    <br/>
+
+
+    {% comment %}
+    <!-- 
+
+
+    <div class="container-fluid"></div>
+<ul class="list-group-item">
+  {% for requirement in requirements %}
+  <li class="list-group-item p-2 pb-3"></li>
+  <li><span>Requirement: </span> <span>{{requirement.req}}</span></li>
+  {% if requirement.reqtype %}
+  <li><span>Requirement type: </span> <span>{{requirement.reqtype}}</span></li>
+  {% endif %}
+  <br />
+  {% if course %}
+  <li><span>Subject: </span> <span>{{course.subj_abbrev}}</span></li>
+  <li><span>Course No.: </span> <span> {{course.no}}</span></li>
+  <li><span>Course Name.: </span> <span> {{course.name}}</span></li>
+  {% endif %}
+  <br />
+  {% if prerequisites %}
+  <li><span>Prerequisite: {{prerequisites.name}}</span></li>
+  {% endif %}
+  <br />
+  {% endfor %}
+  <br />
+  {% endblock %}
+  <br />
+
+  
+
+
+
+
+    <div>
+  {% if forloop.counter|divisibleby: 3 %}
+  <div class="row">
+    {% endif %}
+    <div class="col-6 col-md-4">
+      {% for requirement in requirements %}
+      <h2>{{requirement.req}}</h2>
+      <p>{{requirement.reqtype}}</p>
+      {% for course in requirement.course_set.all %}
+      <p>{{course.course_no}}</p>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endfor %} {% endblock %}
+
+
+
+
+
+  <table class="table">
+    <tr>Requirement: Type</tr>
+
+    {% for requirement in requirements %}
+    <tr><td>{{requirement.req}}:  {{requirement.reqtype}}</td></tr>
+     {% if courses %}
+      <tr><td>{{courses.subj_abbrev}}</td></tr>
+      {% endif %}
+
+
+
+
+    -->
+
+    {% endcomment %}
+  </ul>
+</ul>

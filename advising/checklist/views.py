@@ -1,21 +1,18 @@
 from django.shortcuts import render
-from .models import Degree, Course, Requirement
+from .models import Degree, Course, Requirement, Prerequisite
+from .forms import CourseForm
+from django.http import HttpResponseRedirect
 
 # Create your views here.
 
 def index(request):
   return render(request, "checklist/base.html")
 
-def program_search(request):
-  search_text = request.GET.get("search", " ")
-  return render(request, "checklist/program_search.html", {"search_text": search_text}) 
-
 
 def program_list(request):
   degrees = Degree.objects.all()
   courses = Course.objects.all()
   requirements = Requirement.objects.all()
-
   context = {
     'degrees': degrees,
     'courses': courses,
@@ -24,4 +21,55 @@ def program_list(request):
   return render(request, 'checklist/program_list.html', context)
 
   
+def add_course(request):
+  submitted = False
+  if request.method == "POST":
+    form = CourseForm(request.POST)
+    if form.is_valid():
+      form.save()
+      return HttpResponseRedirect('/add_course?submitted=True')
+  else: 
+    form = CourseForm
+    if 'submitted' in request.GET:
+      submitted = True
+  return render(request, "checklist/add_course.html", {'form': form, 'submitted': submitted})
 
+
+def program_search(request):
+
+  """   -> AttributeError: 'Course' object has no attribute 'reqs_set'
+  degrees = Degree.objects.all()
+  courses = Course.objects.all()
+  progcourses = [ ]
+
+  for course in courses:
+    requirements = course.reqs_set.all()
+    programcourses.append({'course': course, 'req': req})
+
+  context = {
+    'degrees': degrees,
+    'progcourses': progcourses
+          }
+
+          """
+  degrees = Degree.objects.all()
+  courses = Course.objects.all()
+  requirements = Requirement.objects.all()
+  prerequisites = Prerequisite.objects.all()
+
+  sort_by = request.GET.get('sort_by')
+  if sort_by == 'requirement':
+    requirements = requirements.order_by('req')
+  elif sort_by == 'course':
+    courses = courses.order_by('subj_abbrev')
+  elif sort_by == 'prerequisite': 
+    prerequisites = prerequisites.order_by('subj_abbrev')
+
+  context = {
+    'degrees': degrees,
+    'courses': courses,
+    'requirements': requirements, 
+    'prerequisites': prerequisites, 
+    'sort_by': sort_by
+          }
+  return render(request, 'checklist/program_search.html', context)
