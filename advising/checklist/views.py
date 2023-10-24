@@ -53,9 +53,34 @@ def program_search(request):
 
           """
   degrees = Degree.objects.all()
-  courses = Course.objects.all()
-  requirements = Requirement.objects.all()
-  prerequisites = Prerequisite.objects.all()
+  courses = Course.objects.all()  
+  requirements = Requirement.objects.all().prefetch_related('courses')
+  prerequisites = Prerequisite.objects.select_related('course').all()  
+    course_list.append({
+      'course': course,
+      'requirements': requirements,
+      'prerequisites': prerequisites,
+    })
+  
+
+
+  context = {
+    'degrees': degrees,
+    'course_list': course_list,
+
+          }
+  return render(request, 'checklist/program_search.html', context)
+
+"""
+
+  #courses = Course.objects.prefetch_related('reqs').all()  
+  #links courses to requirements
+  #<QuerySet [<Prerequisite: CIDM 1315: Programming Fundamentals>]>
+
+
+ requirements = Requirement.objects.select_related().all()
+ //didn't work
+
 
   sort_by = request.GET.get('sort_by')
   if sort_by == 'requirement':
@@ -64,12 +89,4 @@ def program_search(request):
     courses = courses.order_by('subj_abbrev')
   elif sort_by == 'prerequisite': 
     prerequisites = prerequisites.order_by('subj_abbrev')
-
-  context = {
-    'degrees': degrees,
-    'courses': courses,
-    'requirements': requirements, 
-    'prerequisites': prerequisites, 
-    'sort_by': sort_by
-          }
-  return render(request, 'checklist/program_search.html', context)
+    """

@@ -5,12 +5,60 @@
 </div>
 
 <div class="container-fluid text-center">
-  {% for degree in degrees %}
   <h2>{{degree.level_abbrev}}-{{degree.major}}</h2>
-  {% endfor %}
 </div>
 
-<div class="container-fluid">
+<table class = "table">
+  <thead>
+    <tr>
+<th scope="col">Requirement</th>
+<th scope="col">Requirement type</th>
+<th scope="col">Course Subject</th>
+<th scope="col">Course No.</th>
+<th scope="col">Course Name</th>
+<th scope="col">Prerequisite</th>
+
+</tr>
+  </thead>
+</table>
+
+
+
+  {% for program in program_list %}
+  <tr>
+    <td>{{course.subj_abbrev}}</td>
+    <td>{{course.no}}</td>
+    <td>{{course.name}}</td>
+    <td>{{prerequisite.subj_abbrev}} {{prerequisite.no}}</td> 
+    <td>{{requirement.req}}</td>
+    <td>{{requirement.type}}</td>
+    {% endfor %}
+
+  </tr>
+
+
+
+
+
+
+
+
+    {% endblock %}
+
+    <br />
+    <br/>
+
+
+    {% comment %}
+    <!-- 
+
+      >>> englc = Course.objects.get(id=1).reqs_set.all() //no attribute named reqs_set
+
+
+
+
+
+      <div class="container-fluid">
 <form method="get">
 <label for="sort">Sort</label>
 <select name="sort_by" id="sort_by">
@@ -42,15 +90,6 @@
       {% endfor %}
   </ul>
 </div>
-    {% endblock %}
-
-    <br />
-    <br/>
-
-
-    {% comment %}
-    <!-- 
-
 
     <div class="container-fluid"></div>
 <ul class="list-group-item">
