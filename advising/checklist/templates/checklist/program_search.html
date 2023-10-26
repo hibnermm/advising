@@ -1,0 +1,38 @@
+{% extends 'checklist/base.html' %} {% block content %}
+
+<div class="text-center">
+  <h1>Search Program Details</h1>
+</div>
+
+<div class="container-fluid">
+  <table class="table table-striped">
+    <thead>
+      <th scope="col">Program</th>
+        <tr>
+          <th scope="col">Major</th>
+          <th scope="col">Course</th>
+          <th scope="col">Type</th>
+        </tr>
+      </th>
+    </thead>
+
+    <tbody>
+      <tr>
+        {% for program in programs %}
+        <td>{{level_abbrev}} {{major_abbrev}}</td>
+        <td>{{course.subject_abbrev}} {{course.no}} : {{course.name}}</td>
+        {% if course.is_core = True %}
+        <td>Core</td>
+        {% elif course.is_degree = True %}
+        <td>Degree</td>
+        {% elif course.is_major = True %}
+        <td>Major</td>
+        {% endif %}
+      </tr>
+      {% endfor %}
+      <tr>
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}
