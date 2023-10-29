@@ -1,0 +1,22 @@
+{% extends 'checklist/base.html' %} {% block content %}
+
+<div class="text-center">
+  <h1>Course List</h1>
+</div>
+
+</br>
+<div class="container">
+  <ul class="list-group">
+    {% for course in courses %}
+    <li class="list-group-item">
+      <span>Subject: </span> <span>{{course.subj_abbrev}}</span> 
+      </br>
+      <span>Course No.: </span> <span> {{course.no}}</span>
+      </br>
+      <span>Course Name.: </span> <span> {{course.name}}</span>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+
+{% endblock %}

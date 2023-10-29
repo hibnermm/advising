@@ -1,33 +1,18 @@
 {% extends 'checklist/base.html' %} {% block content %}
 
 <div class="text-center">
-  <h1>Programs</h1>
+  <h1>Program List</h1>
 </div>
 
-
-<div class="container-fluid">
-  <h3>Programs</h3>
-<ul class="list-group-item">
-  {% for program in programs %} 
- 
-    <li><span>Requirement: </span> <span>{{program.level_abbrev}}-{{program.major}}</span></li>
-  {% endfor %}
-</ul>
-</div>
-
-<div class="container-fluid">
-  <h3>Courses</h3>
-<ul class="list-group-item">
-  {% for course in courses %}
-  <li class="list-group-item p-2 pb-3">
-    <li><span>Subject: </span> <span>{{course.subj_abbrev}}</span></li>
-    <li><span>Course No.: </span> <span> {{course.no}}</span></li>
-    <li><span>Course Name.: </span> <span> {{course.name}}</span></li>     
-    <li><span>: {{course.is_core}} </span></li>
-    <li><span>: {{course.core}} </span></li>
-  </li>
-  {% endfor %}
-</ul>
+</br>
+<div class="container">
+  <ul class="list-group">
+    {% for program in programs %}
+    <li class="list-group-item">
+      <span>{{program.level_abbrev}}-{{program.major}}</span>
+      {% endfor %}
+    </li>
+  </ul>
 </div>
 
 

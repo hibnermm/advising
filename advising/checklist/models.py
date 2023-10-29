@@ -16,6 +16,7 @@ class Course(models.Model):
   no = models.IntegerField(verbose_name="Course number")
   name = models.CharField(verbose_name="Course name", max_length=200)   
   hours = models.IntegerField(verbose_name="Course credit hours")
+  programs = models.ManyToManyField('Program', through='ProgramCourses')
   def __str__(self):
     return "{} {}: {}".format(self.subj_abbrev, self.no, self.name)
 
@@ -26,7 +27,8 @@ class ProgramCourses(models.Model):
   is_degree = models.BooleanField(verbose_name="Degree requirement", null=True)
   is_major = models.BooleanField(verbose_name="Major requirement?", null=True)
   semester = models.IntegerField(verbose_name="Semester code")
-
+  def __str__(self):
+    return "{} {}".format(self.program, self.course)
 
 
 
