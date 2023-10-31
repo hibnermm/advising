@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from checklist.models import Program, Course, ProgramCourses
-from checklist.forms import CourseForm, ProgramForm, ProgramCoursesForm
+from checklist.forms import CourseForm, ProgramForm, ProgramCoursesForm, UploadForm
 from django.http import HttpResponseRedirect
+
 
 # Create your views here.
 def index(request):
@@ -32,6 +33,7 @@ def program_search(request):
   4. returns sorted data
   """
 
+
 def add_course(request):
   submitted = False
   if request.method == "POST":
@@ -44,6 +46,7 @@ def add_course(request):
     if 'submitted' in request.GET:
       submitted = True
   return render(request, "checklist/add_course.html", {'form': form, 'submitted': submitted})
+
 
 def add_program(request):
   submitted = False
@@ -70,3 +73,16 @@ def link_course_program(request):
     if 'submitted' in request.GET:
       submitted = True
   return render(request, "checklist/link_course_program.html", {'form': form, 'submitted': submitted})
+
+
+def upload_program(request):
+  if request.method == "POST":
+    form = UploadForm(request.POST, request.FILES)
+    if form.is_valid():
+        save_path = settings.MEDIA_ROOT / form.cleaned_data["file_upload"].name
+        with open(save_path, "wb") as output_file:
+            for chunk in form.cleaned_data["file_upload"].chunks():
+                output_file.write(chunk)
+  else:
+    form = UploadForm()
+  return render(request, "checklist/upload_program.html", {"form": form})

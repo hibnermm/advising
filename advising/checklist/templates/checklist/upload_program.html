@@ -1,0 +1,17 @@
+{% extends 'checklist/base.html' %} {% block content %}
+{% load static %}
+
+<div class="text-center">
+  <h1>Upload Program Information</h1>
+</div>
+
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+
+  {{form.as_p}}
+
+</br>
+  <button type="submit">Submit</button>
+</form>
+
+{% endblock %}

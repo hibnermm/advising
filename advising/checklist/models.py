@@ -17,6 +17,8 @@ class Course(models.Model):
   name = models.CharField(verbose_name="Course name", max_length=200)   
   hours = models.IntegerField(verbose_name="Course credit hours")
   programs = models.ManyToManyField('Program', through='ProgramCourses')
+  #file_name = models.CharField(max_length=100)
+  #file = models.FileField(upload_to='courses/')
   def __str__(self):
     return "{} {}: {}".format(self.subj_abbrev, self.no, self.name)
 
