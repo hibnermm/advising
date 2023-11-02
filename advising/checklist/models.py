@@ -30,7 +30,7 @@ class ProgramCourses(models.Model):
   is_major = models.BooleanField(verbose_name="Major requirement?", null=True)
   semester = models.IntegerField(verbose_name="Semester code")
   def __str__(self):
-    return "{} {}".format(self.program, self.course)
+    return "{} {}: {} {}".format(self.programs.level_abbrev, self.programs.major_abbrev, self.courses.subj_abbrev, self.courses.no)
 
 
 

@@ -1,7 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from django.conf import settings
 from checklist.models import Program, Course, ProgramCourses
 from checklist.forms import CourseForm, ProgramForm, ProgramCoursesForm, UploadForm
 from django.http import HttpResponseRedirect
+
 
 
 # Create your views here.
@@ -36,8 +38,12 @@ def program_search(request):
 
 def add_course(request):
   submitted = False
+  """if is_create:              need to fix this, else will add duplicates
+    instance = None
+  else:
+    instance = get_object_or_404(Course, pk=pk)"""
   if request.method == "POST":
-    form = CourseForm(request.POST)
+    form = CourseForm(request.POST, instance=instance)
     if form.is_valid():
       form.save()
       return HttpResponseRedirect('/addcourse?submitted=True')
@@ -45,13 +51,13 @@ def add_course(request):
     form = CourseForm
     if 'submitted' in request.GET:
       submitted = True
-  return render(request, "checklist/add_course.html", {'form': form, 'submitted': submitted})
+  return render(request, "checklist/add_course.html", {'form': form, 'submitted': submitted})  #'instance': instance,
 
 
 def add_program(request):
   submitted = False
   if request.method == "POST":
-    form = ProgramForm(request.POST)
+    form = ProgramForm(request.POST)    #need to fix this, else will add duplicates
     if form.is_valid():
       form.save()
       return HttpResponseRedirect('/addprogram?submitted=True')
@@ -61,7 +67,7 @@ def add_program(request):
       submitted = True
   return render(request, "checklist/add_program.html", {'form': form, 'submitted': submitted})
 
-def link_course_program(request):
+def link_course_program(request):     #need to set this instead...?
   submitted = False
   if request.method == "POST":
     form = ProgramCoursesForm(request.POST)
@@ -76,13 +82,21 @@ def link_course_program(request):
 
 
 def upload_program(request):
+  submitted = False
   if request.method == "POST":
     form = UploadForm(request.POST, request.FILES)
     if form.is_valid():
-        save_path = settings.MEDIA_ROOT / form.cleaned_data["file_upload"].name
-        with open(save_path, "wb") as output_file:
-            for chunk in form.cleaned_data["file_upload"].chunks():
-                output_file.write(chunk)
+      save_path = settings.MEDIA_ROOT / form.cleaned_data["file_upload"].name
+      with open(save_path, "wb") as output_file:
+        for chunk in form.cleaned_data["file_upload"].chunks():
+          output_file.write(chunk)
+    return HttpResponseRedirect('/uploadprogram?submitted=True')
   else:
     form = UploadForm()
-  return render(request, "checklist/upload_program.html", {"form": form})
+    if 'submitted' in request.GET:
+      submitted = True
+  return render(request, "checklist/upload_program.html", {"form": form, 'submitted': submitted})
+
+
+
+
