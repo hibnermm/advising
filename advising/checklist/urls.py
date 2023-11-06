@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+#from .views import ProgramUploadView
 
 
 urlpatterns = [
@@ -10,5 +11,6 @@ urlpatterns = [
   #path('addcourse', CourseCreateView.as_view(), name='add-course'),
   path('addprogram/', views.add_program, name='add-program'),
   path('linkcourseprogram/', views.link_course_program, name='link-course-program'),
-  path('uploadprogram/', views.upload_program, name='upload-program'),
+  path('uploadprogram/', views.upload_program, name='upload-program')
+  #path('uploadprogram/', ProgramUploadView.as_view(), name='upload-program'),
 ]

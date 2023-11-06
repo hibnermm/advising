@@ -3,6 +3,8 @@ from django.conf import settings
 from checklist.models import Program, Course, ProgramCourses
 from checklist.forms import CourseForm, ProgramForm, ProgramCoursesForm, UploadForm
 from django.http import HttpResponseRedirect
+from django.views import View
+import io, csv
 
 
 
@@ -98,5 +100,33 @@ def upload_program(request):
   return render(request, "checklist/upload_program.html", {"form": form, 'submitted': submitted})
 
 
+"""  did not work
+class ProgramUploadView(View):
+  def get(self, request):
+    template_name = 'upload_program.html'
+    return render(request, template_name)
+  def post(self, request):
+    coursefile = io.TextIOWrapper(request.FILES['coursefile'].file)
+    coursedict = csv.DictReader(coursefile)
+    courselist = list(coursedict)
+    courseobjs = [
+        Course(
+          subj_abbrev=row['subj_abbrev'],
+          no=row['no'],
+          name=row['name'],
+          hours=row['hours'],
+          programs=program,     #fk value
+        )
+        for row in courselist
+    ]
+    try:
+      message = Course.objects.bulk_create(courseobjs)
+      returnmessage = {"status_code": 200}
+      print('courses added')
+    except Exception as e:
+      print('Error importing:', e)
+      returnmessage = {"status_code": 500}
 
+    return JsonResponse(returnmessage)
 
+"""
