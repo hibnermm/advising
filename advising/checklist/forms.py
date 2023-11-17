@@ -34,10 +34,6 @@ class ProgramCoursesForm(ModelForm):
 
 
 class UploadForm(forms.Form):
-     file_upload = forms.FileField()
+  file_upload = forms.FileField()
 
 
-"""
- 
-
-"""

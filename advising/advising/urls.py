@@ -19,11 +19,13 @@ from django.urls import include, path
 from django.conf import settings
 from django.conf.urls.static import static
 import checklist.views
+#from advising_admin.admin import admin_site
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+   path('admin/', admin.site.urls),
+   # path('admin/', admin_site.urls),
     path('', checklist.views.index, name='index'),
-    path('', include('checklist.urls'))
+    path('', include('checklist.urls')), 
 
 ]
 
