@@ -1,0 +1,23 @@
+
+.navbar {
+  min-height: 50px;
+  font-size: 20px;
+  font-weight: 500;  
+  margin-bottom: 25px;
+}
+.navbar-brand {
+  font-size: 20px;
+}
+.navbar-brand > img { 
+  height: 90px;
+}
+
+
+
+/* remember to put css styling in main static directory 
+fix 
+navbar a {
+  float: left;
+  width: 10%;
+  text-align: center;
+}*/

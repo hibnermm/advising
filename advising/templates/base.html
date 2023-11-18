@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+
+    <title>Advising Checklist</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+
+  </head>
+  <body></body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>{% block title %} Advising Checklist {% endblock %}</title>
+    <!-- styling -->
+    <style type="text/css">
+
+    </style>
+    <!---->
+  </head>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm p-3 mb-5 bg-body rounded sticky-top">
+    <a class="navbar-brand" href="{% url 'index' %}">{% block brand %} Home {% endblock %}</a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'course-list' %}">Courses</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'program-list' %}">Programs</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'program-search' %}"
+            >Checklists</a
+          >
+        </li>
+        <!-- {%comment%}<li class="nav-item">
+          <a class="nav-link" href="{% url 'program-info' %}"
+            >Specific Checklist</a
+          > {%endcomment%}-->
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'add-course' %}">Add Course</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'add-program' %}">Add Program</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'link-course-program' %}"
+            >Add to Checklist</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'upload-program' %}">Upload</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  
+
+  <body>
+    {% block content %}
+    <div class="container text-center">
+      <h1>Advising Checklist</h1>
+    </div>
+    {% endblock %}
+
+    <!-- Bootstrap JS -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

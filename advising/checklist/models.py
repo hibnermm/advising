@@ -3,13 +3,14 @@ from django.db import models
 # Create your models here.
 
 class Program(models.Model):
-  level_abbrev = models.CharField(max_length=20, verbose_name="Degree level abbreviation")   
+  level_abbrev = models.CharField(max_length=20, verbose_name="Degree level")   
   major = models.CharField(max_length=200, verbose_name="Major")  
   major_abbrev = models.CharField(max_length=20, verbose_name="Major abbreviation") 
   specialization = models.CharField(max_length=200, verbose_name="Specialization", blank=True)  
   spec_abbrev = models.CharField(max_length=20, verbose_name="Specialization abbreviation", blank=True) 
   def __str__(self):
       return "{}: {}".format(self.level_abbrev, self.major)
+  
 
 class Course(models.Model):
   subj_abbrev = models.CharField(verbose_name="Subject abbreviation", max_length=200)          
@@ -31,7 +32,8 @@ class ProgramCourses(models.Model):
   semester = models.IntegerField(verbose_name="Semester code")
   def __str__(self):
     return "{} {}: {} {}".format(self.programs.level_abbrev, self.programs.major_abbrev, self.courses.subj_abbrev, self.courses.no)
-
+  class Meta:
+     verbose_name_plural = "Program Courses"
 
 
 

@@ -1,0 +1,52 @@
+{% extends 'checklist/base.html' %} {% block content %}
+
+<div class="text-center">
+  <h1>Search</h1>
+</div>
+
+</br>
+
+<div class="text-center">
+  <h2>Specific Program</h2>
+</div>
+
+<form method="POST" action="{$ ''}">
+<button>Search</button>
+</form>
+
+<div class="container">
+      {{ programs.level_abbrev }}</td>
+      {{ programs.major_abbrev }}</td>
+</div>
+
+<div class="container">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Subject Abbreviation</th>
+        <th>Course Number</th>
+        <th>Is Core</th>
+        <th>Is Major</th>
+        <th>Is Degree</th>
+        </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        {% for pc in programcourses_list %}
+        <td>{{ pc.courses.subj_abbrev }}</td>
+        <td>{{ pc.courses.no }}: {{ pc.courses.name }}</td>
+        <td>{{ pc.is_core }}</td>
+        <td>{{ pc.is_major }}</td>
+        <td>{{ pc.is_degree }}</td>
+      </tr>
+      {% endfor %}
+      <tr>
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}
+
+
+

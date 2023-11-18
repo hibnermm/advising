@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.conf import settings
+from django.views.generic import TemplateView
 from checklist.models import Program, Course, ProgramCourses
 from checklist.forms import CourseForm, ProgramForm, ProgramCoursesForm, UploadForm
 from django.http import HttpResponseRedirect
@@ -36,6 +37,39 @@ def program_search(request):
   3. can take in parameter for order_by
   4. returns sorted data
   """
+
+def program_info(request, pk):
+  program = get_object_or_404(Program, pk=pk)
+  #can use Program.objects.get(pk=pk) hwever doesn't address not found object, need to address reverse url  if use get/404
+  """maybe instead just create form in template
+  import Q
+    pclist = ProgramCourses.objects.select_related('programs', 'courses').all()
+    get by program using searched info here if contains e.g. major, major_abbrev, specialization, spec_abbrev
+    store program id
+    for program id return .....related info?
+
+    what if multiple related entries...how to get exact? will need to play with this later
+
+    note to self -> 
+    issue start something like this but not finish
+    made some changes along way, liked some for main ==
+    with branch2 wip, want to pick it up later, start branch3 wip, etc.
+    tbd how to deal with messy mods?
+    need to be more deliberate in what mods go to main, if commit to main then branchModN will be at various stages of past main versions...
+    also when working in collab, might need to separate repo to make a mess in vs shared repo
+    
+      maybe learn to debug better
+      keep branch isolated with one feature change, then delete immediately
+      keep running notes on what mods to be completed -> resources, possible changes etc
+    
+    
+
+  """
+  programcourses_list = ProgramCourses.objects.select_related('programs', 'courses').all()
+ 
+  context = {'programcourses_list': programcourses_list}
+  return render(request, 'checklist/program_search.html', context)
+ 
 
 
 def add_course(request):

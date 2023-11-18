@@ -7,6 +7,7 @@ urlpatterns = [
   path('course/', views.course_list, name='course-list'),
   path('program/', views.program_list, name='program-list'),
   path('search/', views.program_search, name='program-search'),
+  path('programinfo/<int:pk>', views.program_info, name='program-info'),
   path('addcourse/', views.add_course, name='add-course'),
   #path('addcourse', CourseCreateView.as_view(), name='add-course'),
   path('addprogram/', views.add_program, name='add-program'),

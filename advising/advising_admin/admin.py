@@ -6,7 +6,11 @@ from django.urls import path
 # Register your models here.
 
 class AdvisingAdmin(admin.AdminSite):
+  title_header = "Advising Admin"
   site_header = "Advising Administration"
+  index_title = "Advising site admin"
+
+  #this isn't working...
 
 
 
