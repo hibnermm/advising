@@ -137,10 +137,37 @@ def upload_program(request):
   if request.method == "POST":
     form = UploadForm(request.POST, request.FILES)
     if form.is_valid():
+      csv_file = request.FILES['csv_file']
+      """
       save_path = settings.MEDIA_ROOT / form.cleaned_data["file_upload"].name
       with open(save_path, "wb") as output_file:
         for chunk in form.cleaned_data["file_upload"].chunks():
           output_file.write(chunk)
+      """
+      with csv_file.open('r') as file:
+        csv_reader = csv.DictReader(file)
+        for row in reader:
+          program, created_program = Program.objects.get_or_create(
+            level_abbrev=row['level_abbrev'],
+            major=row['major'],
+            major_abbrev=row['major_abbrev'],
+            specialization=row['specialization'],
+            spec_abbrev=row['spec_abbrev'],
+          )
+          course, created_course = Course.objects.get_or_create(
+            subj_abbrev=row['subj_abbrev'],
+            no=row['no'],
+            name=row['name'],
+            hours=row['hours'],
+          )
+          programcourses, created_programcourses = ProgramCourses.objects.get_or_create(
+            program=program,
+            course=course,
+            is_core=row['is_course'],
+            is_degree=row['is_degree'],
+            is_major=row['is_major'],
+            semester=row['semester']
+          )
     return HttpResponseRedirect('/uploadprogram?submitted=True')
   else:
     form = UploadForm()
