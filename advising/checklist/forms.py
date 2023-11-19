@@ -37,3 +37,17 @@ class UploadForm(forms.Form):
   file_upload = forms.FileField()
 
 
+
+class ProgramInfoForm(forms.Form):
+  search = forms.CharField(required=False, min_length=2)
+  search_by = forms.ChoiceField(required=False, choices = (("level_abbrev", "Degree"), ("major", "Major"), ("specialization", "Specialization")))
+
+"""
+
+class LoginForm(forms.Form):
+  username = forms.CharField(max_length=100)
+  password = forms.CharField(min_length=8, widget=forms.PasswordInput)
+  hidden_input = forms.CharField(widget=forms.HiddenInput, initial="Hidden Value")
+
+  """
+

@@ -12,6 +12,9 @@
   height: 90px;
 }
 
+div {
+  margin-bottom: 30px;
+}
 
 
 /* remember to put css styling in main static directory 

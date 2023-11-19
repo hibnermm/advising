@@ -2,7 +2,8 @@ from django.shortcuts import render, get_object_or_404
 from django.conf import settings
 from django.views.generic import TemplateView
 from checklist.models import Program, Course, ProgramCourses
-from checklist.forms import CourseForm, ProgramForm, ProgramCoursesForm, UploadForm
+from checklist.forms import CourseForm, ProgramForm, ProgramCoursesForm, UploadForm, ProgramInfoForm
+#LoginForm
 from django.http import HttpResponseRedirect
 from django.views import View
 import io, csv
@@ -38,8 +39,22 @@ def program_search(request):
   4. returns sorted data
   """
 
-def program_info(request, pk):
-  program = get_object_or_404(Program, pk=pk)
+def program_info(request):
+  search_input = request.GET.get("search", "")
+  form = ProgramInfoForm(request.GET)
+  programs = set()
+
+  if form.is_valid() and form.cleaned_data["search"]:
+    search = form.cleaned_data["search"]
+    search_by = form.cleaned_data.get("search_by", "level_abbrev")
+    if search_by == "level_abbrev":
+      programs = Program.objects.filter(level_abbrev__icontains=search) 
+    elif search_by == "major":
+      programs = Program.objects.filter(major__icontains=search) 
+    elif search_by == "specialization":
+      programs = Program.objects.filter(specialization__icontains=search) 
+  return render(request, 'checklist/program_info.html', {'form': form, 'search_input':search_input, 'programs': programs})
+
   #can use Program.objects.get(pk=pk) hwever doesn't address not found object, need to address reverse url  if use get/404
   """maybe instead just create form in template
   import Q
@@ -64,11 +79,11 @@ def program_info(request, pk):
     
     
 
-  """
   programcourses_list = ProgramCourses.objects.select_related('programs', 'courses').all()
  
   context = {'programcourses_list': programcourses_list}
-  return render(request, 'checklist/program_search.html', context)
+  return render(request, 'checklist/program_info.html', context)
+  """
  
 
 
@@ -162,5 +177,17 @@ class ProgramUploadView(View):
       returnmessage = {"status_code": 500}
 
     return JsonResponse(returnmessage)
+
+
+
+def login(request):
+  if request.method == "POST"
+    form = LoginForm(request.POST)
+    if form.is_valid():
+      form.cleaned_data
+      return redirect("/success-page)
+  else: 
+    form = LoginForm
+  return(request, "login.html", {"method": request.method, "form": form})
 
 """

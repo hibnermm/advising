@@ -1,25 +1,41 @@
 {% extends 'checklist/base.html' %} {% block content %}
 
 <div class="text-center">
-  <h1>Search</h1>
+  <h1>Search for Checklist</h1>
 </div>
 
 </br>
 
-<div class="text-center">
-  <h2>Specific Program</h2>
+<div class="container">
+  <form action="" method="POST">
+    {% csrf_token %} {{form.as_p}}
+    <input type="submit" value="Submit" class="btn btn-secondary" />
+  </form>
 </div>
 
-<form method="POST" action="{$ ''}">
-<button>Search</button>
-</form>
-
+</br>
+</br>
 <div class="container">
-      {{ programs.level_abbrev }}</td>
-      {{ programs.major_abbrev }}</td>
+  {% if form.is_valid and search_input %}
+  <h3>Search results for {{search_input}}</h3>
+  
+  <ul class="list-group">
+    {% for program in programs %}
+    <li class="list-group-item">
+      <span>Program: <a href="{% url 'program-info' program.pk %}#1">{{program}}</a> 
+      </span>
+    </li>
+    {% endfor %}
+  </ul>
+    {% endif %}
 </div>
 
-<div class="container">
+</br>
+
+{% comment %}
+<!-- 
+<div class="container" id="#1">
+  {% for program.pk %}
   <table class="table table-striped">
     <thead>
       <tr>
@@ -45,6 +61,9 @@
     </tbody>
   </table>
 </div>
+
+-->
+{% endcomment %}
 
 {% endblock %}
 
