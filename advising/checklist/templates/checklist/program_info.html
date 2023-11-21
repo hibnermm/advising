@@ -22,8 +22,7 @@
   <ul class="list-group">
     {% for program in programs %}
     <li class="list-group-item">
-      <span>Program: <a href="{% url 'program-info' program.pk %}#1">{{program}}</a> 
-      </span>
+      <span>Program:{{program}}      </span>
     </li>
     {% endfor %}
   </ul>
@@ -34,6 +33,9 @@
 
 {% comment %}
 <!-- 
+
+        <span>Program: <a href="{% url 'program-info' program.pk %}#1">{{program.id}}</a> 
+      </span>
 <div class="container" id="#1">
   {% for program.pk %}
   <table class="table table-striped">

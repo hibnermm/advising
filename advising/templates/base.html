@@ -76,6 +76,12 @@
     <div class="container text-center">
       <h1>Advising Checklist</h1>
     </div>
+
+    <div class="container-fluid">
+    <div class="alert alert-{% if message.level_tag == 'error' %}danger{% else %}{{ message.level_tag }}{% endif %}"
+    role="alert">{{ message }}</div>
+    </div>
+
     {% endblock %}
 
     <!-- Bootstrap JS -->

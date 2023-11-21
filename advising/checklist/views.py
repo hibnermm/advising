@@ -1,11 +1,12 @@
 from django.shortcuts import render, get_object_or_404
 from django.conf import settings
 from django.views.generic import TemplateView
-from checklist.models import Program, Course, ProgramCourses
-from checklist.forms import CourseForm, ProgramForm, ProgramCoursesForm, UploadForm, ProgramInfoForm
-#LoginForm
+from checklist.models import Program, Course, ProgramCourses   #UploadedFile
+from checklist.forms import CourseForm, ProgramForm, ProgramCoursesForm, ProgramInfoForm, UploadFile
+#, LoginForm
 from django.http import HttpResponseRedirect
 from django.views import View
+from django.contrib import messages
 import io, csv
 
 
@@ -85,16 +86,10 @@ def program_info(request):
   return render(request, 'checklist/program_info.html', context)
   """
  
-
-
 def add_course(request):
   submitted = False
-  """if is_create:              need to fix this, else will add duplicates
-    instance = None
-  else:
-    instance = get_object_or_404(Course, pk=pk)"""
   if request.method == "POST":
-    form = CourseForm(request.POST, instance=instance)
+    form = CourseForm(request.POST)
     if form.is_valid():
       form.save()
       return HttpResponseRedirect('/addcourse?submitted=True')
@@ -102,7 +97,27 @@ def add_course(request):
     form = CourseForm
     if 'submitted' in request.GET:
       submitted = True
-  return render(request, "checklist/add_course.html", {'form': form, 'submitted': submitted})  #'instance': instance,
+  return render(request, "checklist/add_course.html", {'form': form, 'submitted': submitted})  
+"""
+
+def add_course(request, pk=None):
+  if request.method == "POST":
+    form = CourseForm(request.POST, instance=course)
+    if form.is_valid():
+      updated_course = form.save()
+      if course is None:
+        messages.success(request, "Course {} was created.".format(updated_course))
+        updated_course = form.save()
+      else:
+          message.success(request, "Course {} was updated".format(updated_course))
+    return redirect("add_course", updated_course.pk)
+  else:
+    form = CourseForm(instance=Course)
+  return render(request, "checklist/add_course.html", {'form': form, 'submitted': submitted})  
+
+
+"""
+
 
 
 def add_program(request):
@@ -132,21 +147,19 @@ def link_course_program(request):     #need to set this instead...?
   return render(request, "checklist/link_course_program.html", {'form': form, 'submitted': submitted})
 
 
+
 def upload_program(request):
   submitted = False
   if request.method == "POST":
     form = UploadForm(request.POST, request.FILES)
     if form.is_valid():
-      csv_file = request.FILES['csv_file']
-      """
-      save_path = settings.MEDIA_ROOT / form.cleaned_data["file_upload"].name
+      save_path = os.path.join(settings.MEDIA_ROOT,request.FILES["file_upload"].name)
       with open(save_path, "wb") as output_file:
-        for chunk in form.cleaned_data["file_upload"].chunks():
-          output_file.write(chunk)
-      """
-      with csv_file.open('r') as file:
+          for chunk in form.cleaned_data["file_upload"].chunks():
+             output_file.write(chunk)
+      with file_upload.open('r') as file:
         csv_reader = csv.DictReader(file)
-        for row in reader:
+        for row in csv_reader:
           program, created_program = Program.objects.get_or_create(
             level_abbrev=row['level_abbrev'],
             major=row['major'],
@@ -175,8 +188,22 @@ def upload_program(request):
       submitted = True
   return render(request, "checklist/upload_program.html", {"form": form, 'submitted': submitted})
 
+"""
+def upload_program(request):
+#UnboundLocalError: cannot access local variable 'form' where it is not associated with a value
+  if request.method == "POST":
+    form = UploadForm(request.POST, request.FILES)
+    if form.is_valid():
+       save_path = settings.MEDIA_ROOT / form.cleaned_data["file_upload"].name
+       with open(save_path, "wb") as output_file:
+          for chunk in form.cleaned_data["file_upload"].chunks():
+             output_file.write(chunk)
+    else:
+        form = UploadForm()
+  return render(request, "checklist/upload_program.html", {"form": form})
 
-"""  did not work
+
+
 class ProgramUploadView(View):
   def get(self, request):
     template_name = 'upload_program.html'

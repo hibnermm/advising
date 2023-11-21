@@ -7,13 +7,15 @@
 
 </br>
 <div class="container">
-<form method="post" enctype="multipart/form-data">
+
+<form method="POST" enctype="multipart/form-data">
   {% csrf_token %}
-
-  <input type="file" name="coursefile">
-
 </br>
-  <button type="submit">Submit</button>
+  <input type="file" name="file_upload">
+
+</form>
+</br>
+  <button type="submit" class="btn btn-secondary">Submit</button>
 </form>
 </div>
 {% endblock %}

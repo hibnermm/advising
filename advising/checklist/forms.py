@@ -2,14 +2,17 @@ from django.db import models
 from django import forms
 from django.forms import ModelForm
 from .models import Course, Program, ProgramCourses
+from django.core.exceptions import ValidationError
 #from django.views.generic.edit import CreateView
 
 class CourseForm(ModelForm):
   class Meta: 
     model = Course
-    fields = "__all__"
-    #fields = ('subj_abbrev', 'no', 'name', 'hours') doesnt automatically connect programs
-
+    fields = 'subj_abbrev', 'no', 'name', 'hours'
+"""  def clean_subj_abbrev(self):
+      value = self.cleaned_data["subj_abbrev"]
+      if value.
+"""
     
 """
 
@@ -34,7 +37,8 @@ class ProgramCoursesForm(ModelForm):
 
 
 class UploadForm(forms.Form):
-  file_upload = forms.FileField()
+  uploaded_file = forms.FileField()
+    
 
 
 
