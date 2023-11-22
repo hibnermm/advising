@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.conf import settings
 from django.views.generic import TemplateView
 from checklist.models import Program, Course, ProgramCourses   #UploadedFile
-from checklist.forms import CourseForm, ProgramForm, ProgramCoursesForm, ProgramInfoForm, UploadFile
+from checklist.forms import CourseForm, ProgramForm, ProgramCoursesForm, ProgramInfoForm, UploadForm
 #, LoginForm
 from django.http import HttpResponseRedirect
 from django.views import View

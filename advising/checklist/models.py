@@ -73,6 +73,3 @@ class UploadedFile(model.Models):
   file_field = models.FieldFile(upload_to="files/%Y/%m/%d/")
 
 """
-
-class UploadFile(forms.Form):
-  upload_file = forms.FileField()
