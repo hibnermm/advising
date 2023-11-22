@@ -1,0 +1,35 @@
+{% extends 'checklist/base.html' %} {% block content %}
+
+<div class="text-center">
+  <h1>Program List</h1>
+</div>
+
+
+</br>
+<div class="container">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Program</th>
+        <th scope="col">Update</th>
+        <th scope="col">Checklist</th>
+        </tr>
+        </thead>
+        <tbody>
+                  {% for program in programs %}
+          <tr>
+            <td> {{program.level_abbrev}}-{{program.major}} </td>
+            <td><a href="{% url 'program-edit' program.id%}"><i class="bi bi-pen"></i></a></td>
+            <td><a href="{% url 'program-detail' program.id%}"><i class="bi bi-card-checklist"></i></a></td>
+          </tr>
+               {% endfor %}
+        </tbody>
+  </table>
+</div>
+
+<div class="container">
+<button class="btn btn-secondary"><a href="{% url 'program-new' %}">Add New Program</a></button>
+</div>
+
+
+{% endblock %}

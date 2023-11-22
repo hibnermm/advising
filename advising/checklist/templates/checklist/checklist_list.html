@@ -1,0 +1,41 @@
+{% extends 'checklist/base.html' %} {% block content %}
+
+<div class="text-center">
+  <h1>Checklists</h1>
+</div>
+
+</br>
+
+
+<div class="container">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Degree Level<a href="?order_by=programs__level_abbrev"><i class="bi bi-filter"></i></a></th>
+        <th>Major<a href="?order_by=programs__major_abbrev"><i class="bi bi-filter"></i></a></th>
+        <th>Subject<a href="?order_by=courses__subj_abbrev"><i class="bi bi-filter"></i></a></th>
+        <th>Course<a href="?order_by=courses__no"><i class="bi bi-filter"></i></a></th>
+        <th>Is Core<a href="?order_by=is_core"><i class="bi bi-filter"></i></a></th>
+        <th>Is Major<a href="?order_by=is_major"><i class="bi bi-filter"></i></a></th>
+        <th>Is Degree<a href="?order_by=is_degree"><i class="bi bi-filter"></i></a></th>
+        </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        {% for pc in programcourses_list %}
+        <td>{{ pc.programs.level_abbrev }}</td>
+        <td>{{ pc.programs.major_abbrev }}</td>
+        <td>{{ pc.courses.subj_abbrev }}</td>
+        <td>{{ pc.courses.no }}: {{ pc.courses.name }}</td>
+        <td>{{ pc.is_core }}</td>
+        <td>{{ pc.is_major }}</td>
+        <td>{{ pc.is_degree }}</td>
+      </tr>
+      {% endfor %}
+      <tr>
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

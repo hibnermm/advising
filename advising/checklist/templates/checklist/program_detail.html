@@ -1,0 +1,45 @@
+{% extends 'checklist/base.html' %} {% block content %}
+
+<div class="text-center">
+  <h1>Program Checklist</h1>
+</div>
+
+<div class="text-center">
+  <h3>{{ program.level_abbrev }}-{{ program.major}}</h3>
+</div>
+
+<div class="container">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Subject Abbreviation</th>
+        <th>Course Number</th>
+        <th>Course Name</th>
+        <th>Credit Hours</th>
+        <th>Semester Code</th>
+        <th>Is Core</th>
+        <th>Is Major</th>
+        <th>Is Degree</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for programcourse in programcourses_list %}
+      <tr>
+        {% if programcourse.programs == program %}
+        <td>{{ programcourse.courses.subj_abbrev }}</td>
+        <td>{{ programcourse.courses.no }}</td>
+        <td>{{ programcourse.courses.name }}</td>
+        <td>{{ programcourse.courses.hours }}</td>
+        <td>{{ programcourse.semester }}</td>
+        <td>{{ programcourse.is_core }}</td>
+        <td>{{ programcourse.is_major }}</td>
+        <td>{{ programcourse.is_degree }}</td>
+        {% endif %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

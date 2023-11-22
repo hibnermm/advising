@@ -1,0 +1,68 @@
+{% extends 'checklist/base.html' %} {% block content %}
+<div class="text-center">
+  <h1>Search for Program Checklists</h1>
+</div>
+
+<div class="container">
+  <form>
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-secondary success">Search</button>
+  </form>
+</div>
+
+</br>
+{% if form.is_valid and search_input %}
+<div class="container">
+  <h3>Results for {{search_input}}</h3>
+</div>
+
+    
+
+<div class="container">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Program</th>
+        <th scope="col">Checklist</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for program in programs %}
+      <tr>
+        <td>{{program.level_abbrev}}-{{program.major}}</td>
+        <td>
+          <a href="{% url 'program-detail' program.id%}"
+            ><i class="bi bi-card-checklist"></i
+          ></a>
+        </td>
+        {% empty %}
+        <td>No results found</td>
+        <td></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %} 
+
+<div class="container">
+  <div class="infocell" >
+    <p>Search History</p>
+    <p>
+      {% for search_by, search in request.session.search_history %}
+      <a href="{% url 'program_search' %}?search_by={{search_by}}&search={{search}}" >
+      {{ search }} ({{ search_by }})</a>
+      {% comment %}
+      NoReverseMatch at /search
+      http://127.0.0.1:8000/search?search_by=level_abbrev&search=bba
+      {% endcomment %}
+      <br>
+      {% empty %}
+        No search history found.
+      {% endfor %}
+    </p>
+  </div>
+  </div>
+
+
+{% endblock %}

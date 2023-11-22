@@ -1,0 +1,30 @@
+{% extends 'checklist/base.html' %} {% block content %}
+
+<div class="text-center">
+  <h1>Course List</h1>
+</div>
+
+</br>
+<div class="container">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Subject</th>
+        <th>Course No.</th>
+        <th>Course Title</th>
+      </tr>
+      </thead>
+      <tbody>
+        {% for course in object_list %}
+        <tr>
+      <td>{{course.subj_abbrev}}</td> 
+      <td>{{course.no}}</td>
+      <td>{{course.name}}</td>
+      {% endfor %}
+    </tr>
+    </tbody>
+  </table>
+  <span>Course Total: {{object_list | length}}</span>
+</div>
+
+{% endblock %}
