@@ -11,11 +11,24 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+from configurations import Configuration, values
 from dotenv import load_dotenv
 load_dotenv()
 import os
+#import templates.BASE_DIR
+import dj_database_url
 
 
+"""
+class Dev(Configuration):
+    BASE_DIR = Path(__file__).resolve().parent.parent
+    SECRET_KEY = str(os.getenv('SECRET_KEY'))
+    DEBUG = values.BooleanValue(True)
+    ALLOWED_HOSTS = ['*']
+    #CommandError: You must set settings.ALLOWED_HOSTS if DEBUG is False., even with ['*']
+
+
+"""
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -28,7 +41,6 @@ SECRET_KEY = str(os.getenv('SECRET_KEY'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
 ALLOWED_HOSTS = []
 
 
@@ -36,14 +48,18 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'checklist.adminconfig.ChecklistAdminConfig',
- 
+    'django.contrib.sites',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'checklist'
+    'checklist', 
+    'debug_toolbar',
+    'crispy_forms',
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -53,6 +69,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware'
 ]
 
 ROOT_URLCONF = 'advising.urls'
@@ -79,13 +96,17 @@ WSGI_APPLICATION = 'advising.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+"""
+DATABASES = {'default': dj_database_url.config(
+          default=f'sqlite:///{BASE_DIR}/db.sqlite3')}
+
 
 
 # Password validation
@@ -139,3 +160,14 @@ STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesSto
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = "/media/"
+
+INTERNAL_IPS = ['127.0.0.1']
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+"""
+class Prod(Dev):
+    DEBUG = False
+    SECRET_KEY = values.SecretValue()
+
+"""

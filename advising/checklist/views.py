@@ -96,14 +96,16 @@ def program_edit(request, pk=None):
 
 
 def upload_checklist(request):
+  form = UploadForm()
   if request.method == "POST":
-    form = UploadForm(request.POST, request.FILES)   #UnboundLocalError at /upload/ cannot access local variable 'form' where it is not associated with a value
+    form = UploadForm(request.POST, request.FILES)   
     if form.is_valid():
-      save_path = settings.MEDIA_ROOT / form.cleaned_data["file_upload"].name
+      save_path = settings.MEDIA_ROOT / form.cleaned_data['csv_file.csv']
       with open(save_path, "wb") as output_file:
         reader = csv.reader(output_file)
+        next(reader)
         for row in reader:
-          Course.objects.get_or_create(
+          course, created_course = Course.objects.get_or_create(
             subj_abbrev=row[0],
             no=row[1],
             name=row[2],
@@ -114,5 +116,7 @@ def upload_checklist(request):
         form = UploadForm()
   return render(request, 'checklist/upload_checklist.html', {"form":form})
 
-
+def get_courses_per_semester(request):
+  course = Course.objects.all().values('course__id').distinct.count()
+  programcourses = ProgramCourses.objects.select_related('programs', 'courses').all()
   

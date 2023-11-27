@@ -1,4 +1,5 @@
 {% extends 'checklist/base.html' %} {% block content %}
+{% load crispy_forms_tags %}
 <div class="text-center">
   <h1>Search for Program Checklists</h1>
 </div>
@@ -50,9 +51,10 @@
     <p>Search History</p>
     <p>
       {% for search_by, search in request.session.search_history %}
-      <a href="{% url 'program_search' %}?search_by={{search_by}}&search={{search}}" >
-      {{ search }} ({{ search_by }})</a>
+
       {% comment %}
+      <a href="{% url 'program_search' %}?search_by={{search_by}}&search={{search}}" >
+        {{ search }} ({{ search_by }})</a>
       NoReverseMatch at /search
       http://127.0.0.1:8000/search?search_by=level_abbrev&search=bba
       {% endcomment %}

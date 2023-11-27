@@ -20,10 +20,12 @@ div {
   margin-bottom: 30px;
 }
 
+/*
 a, a:hover{
-  text-decoration: none;
-  color:#fff;
+  text-decoration-color: #000;
 }
+
+*/
 
 
 .infocell {
@@ -31,3 +33,8 @@ a, a:hover{
   padding: 10px;
   margin: 20px 5px 5px 5px;
 }
+
+.bi, .bi-pen, .bi-card {
+ color:#000;
+}
+           

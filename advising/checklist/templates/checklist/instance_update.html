@@ -1,4 +1,5 @@
 {% extends 'checklist/base.html' %} 
+{% load crispy_forms_tags %}
 {% block title %}
 {% if instance %}
 Editing {{ model_type }} {{ instance }}
@@ -21,10 +22,13 @@ New {{ model_type }}
 <p>For {{ related_model_type }} <em>{{ related_instance }}</em></p>
 {% endif %}
 
+{% comment %}
+{% crispy form %}
+{% endcomment %}
+</form>
 <form method="post">
   {% csrf_token %} {{ form.as_p }}
   <button type="submit" class="btn btn-secondary">
     {% if instance %}Save{% else %}Create{% endif %}
   </button>
-</form>
 {% endblock %}
