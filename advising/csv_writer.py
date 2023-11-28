@@ -13,3 +13,6 @@ if __name__ == '__main__':
   data = [['BIOL', 1607, 'Botany II', 3], ['ENGL', 2201, 'Thematic Analysis', 3]]
   filename = 'media/csvfiles/course_output2.csv'
   write_csv(filename, header, data)  
+
+
+https://docs.djangoproject.com/en/4.2/howto/outputting-csv/

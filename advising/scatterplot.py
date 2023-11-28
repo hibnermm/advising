@@ -22,3 +22,9 @@ if __name__ == '__main__':
     y = [3,8,7,9,2]
     plot_html = gen_scatterplot(x, y)
     gen_html(plot_html)
+
+
+what might interesting to see?
+students intersted in courses over time (dont' have that info but could make it up)
+total number of is_core, is_major, is_degree for each program
+

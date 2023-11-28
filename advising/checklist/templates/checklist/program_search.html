@@ -50,14 +50,11 @@
   <div class="infocell" >
     <p>Search History</p>
     <p>
-      {% for search_by, search in request.session.search_history %}
+      {% for search_by, search in request.session.search_history|slice:":5"  %}
 
-      {% comment %}
-      <a href="{% url 'program_search' %}?search_by={{search_by}}&search={{search}}" >
-        {{ search }} ({{ search_by }})</a>
-      NoReverseMatch at /search
-      http://127.0.0.1:8000/search?search_by=level_abbrev&search=bba
-      {% endcomment %}
+      <a href="{% url 'program-search' %}?search=
+      {{search|urlencode}}&search_by={{ search_by}}">
+      {{ search }} ({{ search_by }})</a>
       <br>
       {% empty %}
         No search history found.

@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-from configurations import Configuration, values
+from configurations import Configuration
 from dotenv import load_dotenv
 load_dotenv()
 import os
@@ -19,13 +19,23 @@ import os
 import dj_database_url
 
 
+
+
 """
 class Dev(Configuration):
     BASE_DIR = Path(__file__).resolve().parent.parent
     SECRET_KEY = str(os.getenv('SECRET_KEY'))
-    DEBUG = values.BooleanValue(True)
-    ALLOWED_HOSTS = ['*']
+    DEBUG = True
+    ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]']
     #CommandError: You must set settings.ALLOWED_HOSTS if DEBUG is False., even with ['*']
+
+https://syntaxfix.com/question/8315/commanderror-you-must-set-settings-allowed-hosts-if-debug-is-false
+
+
+
+For Windows:
+If you're using Powershell, the command should be $env:DJANGO_SETTINGS_MODULE= 'your_value'.
+If you're using batch (aka "cmd"), it's set DJANGO_SETTINGS_MODULE="your_value"
 
 
 """
@@ -43,7 +53,6 @@ SECRET_KEY = str(os.getenv('SECRET_KEY'))
 DEBUG = True
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -56,7 +65,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'checklist', 
     'debug_toolbar',
-    'crispy_forms',
+    "crispy_forms",
+    "crispy_bootstrap5",
 ]
 
 SITE_ID = 1
@@ -140,6 +150,16 @@ USE_I18N = True
 USE_TZ = True
 
 
+#cache
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.memcached.PyMemcacheCache",
+        "LOCATION": "127.0.0.1:8000",
+    }
+}
+
+
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
@@ -163,11 +183,19 @@ MEDIA_URL = "/media/"
 
 INTERNAL_IPS = ['127.0.0.1']
 
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
+#crispy
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"
+
 
 """
 class Prod(Dev):
     DEBUG = False
-    SECRET_KEY = values.SecretValue()
+    SECRET_KEY =  str(os.getenv('SECRET_KEY'))
+    #SECRET_KEY = values.SecretValue()
+    ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 """
+
+# python manage.py diffsettings --all

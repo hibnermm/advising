@@ -16,12 +16,12 @@ class InstanceForm(forms.ModelForm):
       button_title = "Create"
     self.helper.add_input(Submit("", button_title))
 
-class CourseForm(ModelForm):
+class CourseForm(InstanceForm):
   class Meta: 
     model = Course
     fields = 'subj_abbrev', 'no', 'name', 'hours'
 
-class ProgramForm(ModelForm):
+class ProgramForm(InstanceForm):
   class Meta:
     model = Program
     fields = "__all__"
@@ -38,7 +38,6 @@ class UploadForm(forms.Form):
   csvfile = forms.FileField(required=False)
 
   
-
 
 class SearchProgramForm(forms.Form):
   search_by = forms.ChoiceField(required=False, choices = (("level_abbrev", "Degree"), ("major", "Major"), ("specialization", "Specialization")))

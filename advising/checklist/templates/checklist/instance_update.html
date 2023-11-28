@@ -22,13 +22,13 @@ New {{ model_type }}
 <p>For {{ related_model_type }} <em>{{ related_instance }}</em></p>
 {% endif %}
 
-{% comment %}
 {% crispy form %}
-{% endcomment %}
+{% comment %}
 </form>
 <form method="post">
   {% csrf_token %} {{ form.as_p }}
   <button type="submit" class="btn btn-secondary">
     {% if instance %}Save{% else %}Create{% endif %}
   </button>
+  {% endcomment %}
 {% endblock %}

@@ -100,21 +100,44 @@ def upload_checklist(request):
   if request.method == "POST":
     form = UploadForm(request.POST, request.FILES)   
     if form.is_valid():
-      save_path = settings.MEDIA_ROOT / form.cleaned_data['csv_file.csv']
+      csv_file = form.cleaned_data['csv_file.csv']   #validaetes form inputs, returns object
+      save_path = settings.MEDIA_ROOT / 'csv_file.csv'
       with open(save_path, "wb") as output_file:
-        reader = csv.reader(output_file)
-        next(reader)
+        for chunk in csv_file.chunks():
+          output_file.write(chunk)
+  else:
+    form = UploadForm()
+  return render(request, 'checklist/upload_checklist.html', {"form":form})
+
+"""
+      with open(save_path, "r") as output_file:
+        reader = csv.reader(output_file, newline = '')    #return reader object, opens
+        next(reader)    #skips header?
+
         for row in reader:
           course, created_course = Course.objects.get_or_create(
-            subj_abbrev=row[0],
+            subj_abbrev=row[0],    ??subj_abbrev=row['Subj_abbrev']
             no=row[1],
             name=row[2],
             hours=row[3],
             programs=row[4]
           )
-    else:
-        form = UploadForm()
-  return render(request, 'checklist/upload_checklist.html', {"form":form})
+"""
+
+https://docs.python.org/3/library/csv.html
+import csv
+
+with open('names.csv', 'w', newline='') as csvfile:
+    fieldnames = ['first_name', 'last_name']
+    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+    writer.writeheader()
+    writer.writerow({'first_name': 'Baked', 'last_name': 'Beans'})
+    writer.writerow({'first_name': 'Lovely', 'last_name': 'Spam'})
+    writer.writerow({'first_name': 'Wonderful', 'last_name': 'Spam'})
+
+
+
+
 
 def get_courses_per_semester(request):
   course = Course.objects.all().values('course__id').distinct.count()
