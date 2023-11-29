@@ -178,8 +178,12 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static_production_test')
 
 STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+#media 
+
 MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 INTERNAL_IPS = ['127.0.0.1']
 
