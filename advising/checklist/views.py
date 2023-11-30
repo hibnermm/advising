@@ -2,12 +2,15 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.conf import settings
 from .models import Program, Course, ProgramCourses
 from .forms import CourseForm, ProgramForm, SearchProgramForm, UploadForm
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.views.generic import ListView
 from django.contrib import messages
-import io, csv, os
+import io, csv, os, sys
 from pathlib import Path
 from django.core.files.storage import FileSystemStorage
+from django.http import FileResponse
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import A4
 
 
 # Create your views here.
@@ -129,7 +132,7 @@ def upload_checklist(request):
     if request.method == "POST":
         form = UploadForm(request.POST, request.FILES)
         if form.is_valid():
-            file = os.path.join(settings.MEDIA_ROOT, request.FILES['file'])
+            file = os.path.join(settings.MEDIA_ROOT, request.FILES["file"])
             # #https://ordinarycoders.com/blog/article/django-file-image-uploads
             # file = request.FILES['file']
             # fss = FileSystemStorage()
@@ -191,3 +194,86 @@ def get_courses_per_semester(request):
 # shift tab  - > does something can't remember
 # from now on, follow through on one resource at a time, comment out where ya found it for later fyis
 # also comment out what didn't work so you don't keep trying doing a hundred renditions of it -> delete later
+
+
+# def checklist_pdf(request):  # pk
+#     # program = get_object_or_404(Program, pk=pk)
+#     programcourses_list = ProgramCourses.objects.select_related(
+#         "programs", "courses"
+#     ).all()
+#     buffer = io.BytesIO()
+#     pdf = canvas.Canvas(buffer)
+#     # program = Program.objects.all()
+#     programcourses_list = ProgramCourses.objects.prefetch_related(
+#         "programs", "courses"
+#     ).all()
+
+#     pdf.drawString(100, 700, "Checklist")
+#     # for p in program:
+#     #     row = f"Program: { p.level_abbrev }-{ p.major} \n"
+#     for pc in programcourses_list:
+#         # if pc.programs == program:
+#         # pdf.drawString(100, y, f"Checklist: { pc.programs.level_abbrev }-{ pc.programs.major}")
+#         # pdf.drawString(100, y - 20 , f"Subject: { pc.courses.subj_abbrev } {pc.courses.no}: {pc.courses.name} ")
+#         # pdf.drawString(100, y - 40 , f"Credit hours: {pc.courses.hours} ")
+#         # pdf.drawString(100, y - 60 , f"Core: {pc.is_core}" )
+#         # pdf.drawString(100, y - 80 , f"Major: {pc.is_major}")
+#         # pdf.drawString(100, y - 100 , f"Degree: {pc.is_degree} ")
+#         row = f"Program: { pc.programs.level_abbrev }-{ pc.programs.major} \n"
+#         row += (
+#             f"Subject: { pc.courses.subj_abbrev } {pc.courses.no}: {pc.courses.name} \n"
+#         )
+#         row += f"Core: {pc.is_core} \n"
+#         row += f"Major: {pc.is_major} \n"
+#         row += f"Degree: {pc.is_degree} \n"
+#         pdf.drawString(100, pdf._y - 20, row)
+#     pdf.showPage()
+#     pdf.save()
+#     buffer.seek(0)
+#     return FileResponse(buffer, as_attachment=True, filename="checklist.pdf")
+# prints only "checklist" title rn, issue is with prefetch orm query...
+# https://docs.djangoproject.com/en/4.2/howto/outputting-pdf/
+# https://www.reportlab.com/docs/reportlab-userguide.pdf
+# https://python-forum.io/thread-1599.HTML
+# https://docs.djangoproject.com/en/4.2/ref/models/querysets/
+
+
+
+def courses_pdf(request): 
+    buffer = io.BytesIO()
+    c = canvas.Canvas(buffer)
+    c.setFont("Helvetica", 10)
+    w, h = A4
+
+    text = c.beginText(100, h - 50)
+
+    courses = Course.objects.all()
+
+    for course in courses:
+        text.textLine(f"Subject No: { course.subj_abbrev } { course.no}")
+        text.textLine(f"Title: { course.name} ")
+        text.textLine(f"Credit hours: {course.hours} ")
+        text.textLine(" ")
+        c.drawText(text)
+
+    c.showPage()
+    c.save()
+    buffer.seek(0)
+    return FileResponse(buffer, as_attachment=True, filename="checklist.pdf")
+
+    #https://pythonassets.com/posts/create-pdf-documents-in-python-with-reportlab/
+
+
+def courses_csv(request): 
+    courses = Course.objects.all()
+    response = HttpResponse(content_type='text/csv')  #tells browser filetype
+    response['Content-Disposition'] = 'attachment; filename=courses.csv'  #names file
+
+
+    cw = csv.writer(response)
+    cw.writerow(['Subject Abbreviation', 'Course No.', 'Title', 'Credit Hours'])
+
+    for course in courses:
+        cw.writerrows([course.subj_abbrev, course.no, course.name, course.hours])
+
+    return response

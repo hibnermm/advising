@@ -27,4 +27,14 @@
   <span>Course Total: {{object_list | length}}</span>
 </div>
 
+<div class="text-center">
+  <h5>
+    Download:
+    <span
+      >PDF
+      <a href="{% url 'courses-pdf'%}"><i class="bi bi-file-pdf"></i></a>
+    </span>
+    <span>CSV<a href="{% url 'courses-csv'%}"><i class="bi bi-filetype-csv"></i></a></span>
+  </h5>
+</div>
 {% endblock %}

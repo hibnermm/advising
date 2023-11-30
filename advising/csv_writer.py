@@ -14,5 +14,6 @@ if __name__ == '__main__':
   filename = 'media/csvfiles/course_output2.csv'
   write_csv(filename, header, data)  
 
-
+https://pypi.org/project/django-export-csv/
 https://docs.djangoproject.com/en/4.2/howto/outputting-csv/
+https://pypi.org/project/django-csv-export-view/

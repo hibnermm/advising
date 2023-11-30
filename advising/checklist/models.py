@@ -36,6 +36,8 @@ class Course(models.Model):
 
     def __str__(self):
         return "{} {}: {}".format(self.subj_abbrev, self.no, self.name)
+    
+
 
 
 class ProgramCourses(models.Model):

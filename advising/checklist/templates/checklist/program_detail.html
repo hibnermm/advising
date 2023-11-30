@@ -7,7 +7,19 @@
 <div class="text-center">
   <h3>{{ program.level_abbrev }}-{{ program.major}}</h3>
 </div>
-
+{% comment %} work on this another time
+<div class="text-center">
+  <h5>
+    Download:
+    <span
+      >PDF
+      <a href="{% url 'checklist-pdf'%}"><i class="bi bi-file-pdf"></i></a>
+      {% comment %} program.id doesn't work in url{% endcomment %}
+    </span>
+    <span>CSV<i class="bi bi-filetype-csv"></i> </span>
+  </h5>
+</div>
+{% endcomment %}
 <div class="container">
   <table class="table table-striped">
     <thead>
