@@ -8,3 +8,5 @@ from .settings import *
 # ?: (security.W020) ALLOWED_HOSTS must not be empty in deployment.
 
 #https://learn.microsoft.com/en-us/azure/app-service/quickstart-python?tabs=flask%2Cwindows%2Cazure-cli%2Cvscode-deploy%2Cdeploy-instructions-azportal%2Cterminal-bash%2Cdeploy-instructions-zip-azcli
+
+#made student account, followed directions best of ability:  https://advisingtool.azurewebsites.net/
