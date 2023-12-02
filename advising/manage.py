@@ -7,11 +7,13 @@ import sys
 def main():
     """Run administrative tasks."""
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "advising.settings")
-    os.environ.setdefault("DJANGO_CONFIGURATION", "Dev")
+    #os.environ.setdefault("DJANGO_CONFIGURATION", "Dev")
     try:
+        # when not using django-configs
         from django.core.management import execute_from_command_line
-
-        # from configurations.management import execute_from_command_line
+        
+        # django-configs didn't work:  CommandError: You must set settings.ALLOWED_HOSTS if DEBUG is False.
+        #from configurations.management import execute_from_command_line
     except ImportError as exc:
         raise ImportError(
             "Couldn't import Django. Are you sure it's installed and "

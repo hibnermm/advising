@@ -11,28 +11,31 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-from configurations import Configuration
+from configurations import Configuration #, values
 from dotenv import load_dotenv
 
 load_dotenv()
 import os
 
-# import templates.BASE_DIR
+#/import templates.BASE_DIR
 import dj_database_url
 
 
-"""
-class Dev(Configuration):
-    BASE_DIR = Path(__file__).resolve().parent.parent
-    SECRET_KEY = str(os.getenv('SECRET_KEY'))
-    DEBUG = True
-    ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]']
+
+# class Dev(Configuration):
+#     BASE_DIR = Path(__file__).resolve().parent.parent
+#     SECRET_KEY = str(os.getenv('SECRET_KEY'))
+#     DEBUG = values.BooleanValue(True)
+#     ALLOWED_HOSTS = values.ListValue([])
+#     TIME_ZONE = values.Value('UTC')
+
+    # ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]']
     #CommandError: You must set settings.ALLOWED_HOSTS if DEBUG is False., even with ['*']
 
-https://syntaxfix.com/question/8315/commanderror-you-must-set-settings-allowed-hosts-if-debug-is-false
+# https://syntaxfix.com/question/8315/commanderror-you-must-set-settings-allowed-hosts-if-debug-is-false
 
 
-
+"""
 For Windows:
 If you're using Powershell, the command should be $env:DJANGO_SETTINGS_MODULE= 'your_value'.
 If you're using batch (aka "cmd"), it's set DJANGO_SETTINGS_MODULE="your_value"
@@ -45,6 +48,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
+
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = str(os.getenv("SECRET_KEY"))
@@ -70,7 +74,7 @@ INSTALLED_APPS = [
     "import_export",
 ]
 
-# SITE_ID = 1
+SITE_ID = 1
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -88,7 +92,11 @@ ROOT_URLCONF = "advising.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join(BASE_DIR, "templates")],
+        #doesn't work, used when trying to make django-configs work
+        "DIRS": [BASE_DIR, "templates"],
+        #base_dir not defined (see above) -> added in top of page templates.basedir
+        #NameError: name 'BASE_DIR' is not defined
+        # "DIRS": [os.path.join(BASE_DIR, "templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -96,7 +104,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                "django.template.context_processors.media",
+                #"django.template.context_processors.media",
             ],
         },
     },
@@ -202,14 +210,14 @@ from import_export.formats.base_formats import CSV, XLSX
 IMPORT_FORMATS = [CSV, XLSX]
 EXPORT_FORMATS = [CSV, XLSX]
 
-"""
-class Prod(Dev):
-    DEBUG = False
-    SECRET_KEY =  str(os.getenv('SECRET_KEY'))
-    #SECRET_KEY = values.SecretValue()
-    ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
-"""
+# class Prod(Dev):
+#     DEBUG = False
+#     #SECRET_KEY =  str(os.getenv('SECRET_KEY'))
+#     SECRET_KEY = values.SecretValue()
+#     #ALLOWED_HOSTS = ['localhost', '127.0.0.1'] doesn't work
+
+
 
 # python manage.py diffsettings --all
 
