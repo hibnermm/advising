@@ -1,0 +1,35 @@
+
+[
+  {
+    "model": "checklist.course",
+    "pk": 1,
+    "fields": {
+      "subj_abbrev": "ENGL",
+      "no": "1301",
+      "name": "Introduction to Academic Writing and Argumentation",
+      "hours": "3"
+    }
+  },
+  {
+    "model": "checklist.course",
+    "pk": 2,
+    "fields": {
+      "subj_abbrev": "BIOL",
+      "no": "1406",
+      "name": "Basic and Contemporary Biology I (HAZ)",
+      "hours": "3"
+    }
+  },
+  {
+    "model": "checklist.course",
+    "pk": 3,
+    "fields": {
+      "subj_abbrev": "CIDM",
+      "no": "2315",
+      "name": "Programming Business Applications",
+      "hours": "3"
+    }
+  }
+]
+
+

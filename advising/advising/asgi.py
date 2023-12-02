@@ -12,9 +12,9 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'advising.settings')
-os.environ.setdefault('DJANGO_CONFIGURATION', 'DEV')
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "advising.settings")
+os.environ.setdefault("DJANGO_CONFIGURATION", "DEV")
 
-#from configurations.asgi import get_asgi_application
+# from configurations.asgi import get_asgi_application
 
 application = get_asgi_application()

@@ -20,7 +20,7 @@ class Program(models.Model):
     )
 
     def __str__(self):
-        return "{}: {}".format(self.level_abbrev, self.major)
+        return "{}: {} {}".format(self.level_abbrev, self.major, self.specialization)
 
 
 class Course(models.Model):
@@ -36,8 +36,6 @@ class Course(models.Model):
 
     def __str__(self):
         return "{} {}: {}".format(self.subj_abbrev, self.no, self.name)
-    
-
 
 
 class ProgramCourses(models.Model):
@@ -63,3 +61,6 @@ class ProgramCourses(models.Model):
 
     class Meta:
         verbose_name_plural = "Program Courses"
+
+# class AdminUpload(models.Model):
+#     title 

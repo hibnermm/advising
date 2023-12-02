@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.conf import settings
 from .models import Program, Course, ProgramCourses
-from .forms import CourseForm, ProgramForm, SearchProgramForm, UploadForm
+from .forms import CourseForm, ProgramForm, SearchProgramForm, UploadFixture
 from django.http import HttpResponseRedirect, HttpResponse
 from django.views.generic import ListView
 from django.contrib import messages
@@ -11,7 +11,14 @@ from django.core.files.storage import FileSystemStorage
 from django.http import FileResponse
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
-
+from plotly.offline import plot
+import plotly.graph_objs as graphs
+import plotly.express as px
+from dash import Dash, dcc, html, Input, Output
+import plotly.graph_objects as go
+import datetime
+from django.db.models import Count
+import pandas as pd
 
 # Create your views here.
 def index(request):
@@ -127,43 +134,43 @@ def program_edit(request, pk=None):
     )
 
 
-def upload_checklist(request):
-    # form = UploadForm()
-    if request.method == "POST":
-        form = UploadForm(request.POST, request.FILES)
-        if form.is_valid():
-            file = os.path.join(settings.MEDIA_ROOT, request.FILES["file"])
-            # #https://ordinarycoders.com/blog/article/django-file-image-uploads
-            # file = request.FILES['file']
-            # fss = FileSystemStorage()
-            # file_saved = fss.save(file.name, file)
-            # file_url = fss.url(file_saved)
+# def upload_checklist(request):
+#     # form = UploadForm()
+#     if request.method == "POST":
+#         form = UploadForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             file = os.path.join(settings.MEDIA_ROOT, request.FILES["file"])
+#             # #https://ordinarycoders.com/blog/article/django-file-image-uploads
+#             # file = request.FILES['file']
+#             # fss = FileSystemStorage()
+#             # file_saved = fss.save(file.name, file)
+#             # file_url = fss.url(file_saved)
 
-            # file = os.path.join(settings.MEDIA_ROOT, file)
-            return redirect("/course/")
-            # file = form.cleaned_data[
-            #     "file"
-            # ]  # validaetes form inputs, returns object
-            # save_path = settings.MEDIA_ROOT
-            # # with open(save_path, "wb") as output_file:
-            # #   for chunk in csv_file.chunks():
-            # #     output_file.write(chunk)
-    else:
-        form = UploadForm()
-        return render(request, "checklist/upload_checklist.html", {"form": form})
+#             # file = os.path.join(settings.MEDIA_ROOT, file)
+#             return redirect("/course/")
+#             # file = form.cleaned_data[
+#             #     "file"
+#             # ]  # validaetes form inputs, returns object
+#             # save_path = settings.MEDIA_ROOT
+#             # # with open(save_path, "wb") as output_file:
+#             # #   for chunk in csv_file.chunks():
+#             # #     output_file.write(chunk)
+#     else:
+#         form = UploadForm()
+#         return render(request, "checklist/upload_checklist.html", {"form": form})
 
-    # with open(save_path, "r") as output_file:
-    #     reader = csv.reader(output_file, newline="")  # return reader object, opens
-    #     next(reader)  # skips header?
+#     # with open(save_path, "r") as output_file:
+#     #     reader = csv.reader(output_file, newline="")  # return reader object, opens
+#     #     next(reader)  # skips header?
 
-    for row in reader:
-        course, created_course = Course.objects.get_or_create(
-            subj_abbrev=row[0],  # subj_abbrev=row['Subj_abbrev']
-            no=row[1],
-            name=row[2],
-            hours=row[3],
-            programs=row[4],
-        )
+#     for row in reader:
+#         course, created_course = Course.objects.get_or_create(
+#             subj_abbrev=row[0],  # subj_abbrev=row['Subj_abbrev']
+#             no=row[1],
+#             name=row[2],
+#             hours=row[3],
+#             programs=row[4],
+#         )
 
 
 # https://docs.python.org/3/library/csv.html
@@ -183,9 +190,9 @@ def upload_checklist(request):
 # ? def import?
 
 
-def get_courses_per_semester(request):
-    course = Course.objects.all().values("course__id").distinct.count()
-    programcourses = ProgramCourses.objects.select_related("programs", "courses").all()
+# def get_courses_per_semester(request):
+#     course = Course.objects.all().values("course__id").distinct.count()
+#     programcourses = ProgramCourses.objects.select_related("programs", "courses").all()
 
 
 # Use ctrl / to comment
@@ -238,8 +245,7 @@ def get_courses_per_semester(request):
 # https://docs.djangoproject.com/en/4.2/ref/models/querysets/
 
 
-
-def courses_pdf(request): 
+def courses_pdf(request):
     buffer = io.BytesIO()
     c = canvas.Canvas(buffer)
     c.setFont("Helvetica", 10)
@@ -261,19 +267,66 @@ def courses_pdf(request):
     buffer.seek(0)
     return FileResponse(buffer, as_attachment=True, filename="checklist.pdf")
 
-    #https://pythonassets.com/posts/create-pdf-documents-in-python-with-reportlab/
+    # https://pythonassets.com/posts/create-pdf-documents-in-python-with-reportlab/
 
 
-def courses_csv(request): 
+def courses_csv(request):
     courses = Course.objects.all()
-    response = HttpResponse(content_type='text/csv')  #tells browser filetype
-    response['Content-Disposition'] = 'attachment; filename=courses.csv'  #names file
-
+    response = HttpResponse(content_type="text/csv")  # tells browser filetype
+    response["Content-Disposition"] = "attachment; filename=courses.csv"  # names file
 
     cw = csv.writer(response)
-    cw.writerow(['Subject Abbreviation', 'Course No.', 'Title', 'Credit Hours'])
+    cw.writerow(["Subject Abbreviation", "Course No.", "Title", "Credit Hours"])
 
     for course in courses:
         cw.writerrows([course.subj_abbrev, course.no, course.name, course.hours])
 
     return response
+
+
+def dashboard(request):
+    pcount= Program.objects.all().count()
+    ccount = Course.objects.all().count()
+    x = ['Program', 'Course']
+    y = [pcount, ccount]
+
+    fig = go.Figure(data=[go.Bar(
+            x=x, y=y,
+            text=y,
+            textposition='auto',
+            # color_discrete_map = {'program': '#7FD4C1', 'course': '#30BFDD',},
+        )])
+
+    fig.update_layout(
+        #barmode='group',
+        title_text = "Monthly New Additions",
+        title_x=0.5,
+        yaxis_range=[0, 5])
+
+# https://python-charts.com/ranking/bar-chart-plotly/#text didnt work, undefined seveal times
+    # # df = pd.DataFrame(dict(
+    # #     group = categories,
+    # #     values = [pcount, ccount] 
+    # ))
+    # categories = ['program', 'course']
+    # x = ['Program', 'Course']
+    # y = [pcount, ccount]
+    # fig = px.bar(df,
+    #         x='categories', 
+    #         y='values',
+    #         #text=y,
+    #         #textposition='auto',
+    #         # color_discrete_map = {'program': '#7FD4C1', 'course': '#30BFDD',},
+    # )
+
+
+    # fig = go.Figure(data=[
+    #     go.Bar(name='Program', x=categories, y=[pcount,]),
+    #     go.Bar(name='Course', x=categories, y=[ccount,])
+    # ])
+    # fig.update_layout(
+    #     #barmode='group',
+    #     title_text = "Monthly New Additions",
+    #     yaxis_range=[0, 5])
+    figcount = fig.to_html()
+    return render(request, "checklist/dashboard.html", {'figcount': figcount})

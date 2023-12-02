@@ -38,7 +38,9 @@ class ChecklistForm(ModelForm):
         # fields = ('programs', 'courses', 'is_core', 'is_degree', 'is_major', 'semester')
 
 
-class UploadForm(forms.Form):
+class UploadFixture(forms.Form):
+    title = title = forms.CharField(max_length=50)
+    date = forms.DateField()
     file = forms.FileField(required=False)
 
 

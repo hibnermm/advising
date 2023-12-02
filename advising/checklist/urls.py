@@ -14,9 +14,9 @@ urlpatterns = [
     path("checklist/", views.checklist_list, name="checklist-list"),
     path("programs/<int:pk>", views.program_edit, name="program-edit"),
     path("programs/new", views.program_edit, name="program-new"),
-    path("upload/", views.upload_checklist, name="upload-checklist"),
-    path("courses-pdf/", views.courses_pdf, name="courses-pdf"),  
-    path("courses-csv/", views.courses_csv, name="courses-csv")  
-    #path("pdf/", views.checklist_pdf, name="checklist-pdf")   "pdf/<int:pk>" didn't work for specific program -> specific checklist pdfs, do this later
+    # path("upload/", views.upload_checklist, name="upload-checklist"),
+    path("courses-pdf/", views.courses_pdf, name="courses-pdf"),
+    path("courses-csv/", views.courses_csv, name="courses-csv"),
+    path('dashboard', views.dashboard, name='dashboard')
+    # path("pdf/", views.checklist_pdf, name="checklist-pdf")   "pdf/<int:pk>" didn't work for specific program -> specific checklist pdfs, do this later
 ]
-

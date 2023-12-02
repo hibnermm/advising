@@ -21,9 +21,9 @@ from django.conf.urls.static import static
 import checklist.views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', checklist.views.index, name='index'),
-    path('', include('checklist.urls')), 
+    path("admin/", admin.site.urls),
+    path("", checklist.views.index, name="index"),
+    path("", include("checklist.urls")),
 ]
 
 
@@ -32,5 +32,5 @@ if settings.DEBUG:
     import debug_toolbar
 
     urlpatterns = [
-       path('__debug__/', include(debug_toolbar.urls)),
+        path("__debug__/", include(debug_toolbar.urls)),
     ] + urlpatterns

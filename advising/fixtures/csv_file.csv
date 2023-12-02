@@ -1,2 +1,0 @@
-jmodel,id,level_abbrev, major, major_abbrev, specialization, spec_abbrev,model,id, subj_abbrev, no, name, hours,model,id, is_core, is_degree, is_major, semester,courses_id,programs_id
-checklist_program,7,BS, Agribusiness, AGBE, , ,checklist_course,16, AGBE,4301, Advanced Farm and Ranch Management,3,checklist_programcourses,11, False, False, True,3,16,7
