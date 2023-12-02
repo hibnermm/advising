@@ -24,3 +24,6 @@ from .settings import *
 # On production set Debug = False
 # On development put only the domains you want the site to be accessible with ['localhost', '127.0.0.1', '*']
 # On production only put the domains that you configured your host with ['localhost', '127.0.0.1', 'yourdomain.com']
+
+
+# https://www.w3schools.com/django/django_deploy_requirements.php
