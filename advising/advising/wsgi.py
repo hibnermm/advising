@@ -15,5 +15,6 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "advising.settings")
 os.environ.setdefault("DJANGO_CONFIGURATION", "Dev")
 # os.environ["DJANGO_SETTINGS_MODULE"] = "advising.settings"
 # from configurations.wsgi import get_wsgi_application
+# doesn't work for django-configurations wip
 
 application = get_wsgi_application()

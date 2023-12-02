@@ -14,11 +14,11 @@ from reportlab.lib.pagesizes import A4
 from plotly.offline import plot
 import plotly.graph_objs as graphs
 import plotly.express as px
-from dash import Dash, dcc, html, Input, Output
+# from dash import Dash, dcc, html, Input, Output
 import plotly.graph_objects as go
-import datetime
+# import datetime
 from django.db.models import Count
-import pandas as pd
+# import pandas as pd
 
 # Create your views here.
 def index(request):
@@ -90,6 +90,7 @@ def program_detail(request, pk):
 class CourseListView(ListView):
     model = Course
     template = "checklist/course_list.html"
+
 
 
 def checklist_list(request):
@@ -287,8 +288,8 @@ def courses_csv(request):
 def dashboard(request):
     pcount= Program.objects.all().count()
     ccount = Course.objects.all().count()
-    x = ['Program', 'Course']
-    y = [pcount, ccount]
+    x = ['Program', 'Course'] #['Program']   
+    y = [pcount, ccount] #[pcount]
 
     fig = go.Figure(data=[go.Bar(
             x=x, y=y,
@@ -299,9 +300,9 @@ def dashboard(request):
 
     fig.update_layout(
         #barmode='group',
-        title_text = "Monthly New Additions",
+        title_text = "Program & Course: Quarterly Updates",
         title_x=0.5,
-        yaxis_range=[0, 5])
+        yaxis_range=[0, 25])
 
 # https://python-charts.com/ranking/bar-chart-plotly/#text didnt work, undefined seveal times
     # # df = pd.DataFrame(dict(

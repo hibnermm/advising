@@ -4,7 +4,7 @@ from django import forms
 from django.urls import path
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from django.urls import reverse
+# from django.urls import reverse
 from checklist.resources import ProgramResource, CourseResource, ProgramCoursesResource
 from import_export.admin import ImportExportModelAdmin  # ImportExportMixin
 from django.template.response import TemplateResponse
@@ -14,7 +14,6 @@ from .forms import UploadFixture
 
 # class csv_upload(forms.Form):
 #     csv_upload = forms.FileField()
-
 
 
 class ProgramAdmin(ImportExportModelAdmin):  # ImportExportMixin, admin.ModelAdmin
@@ -98,6 +97,8 @@ class UploadFixture(admin.AdminSite):
         else:
             form = UploadFixture()
         return render(request, "admin/upload_fixture.html", {"form": form}) 
+
+        #can't get to display
 
 # Register your models here.
 admin.site.register(Program, ProgramAdmin)

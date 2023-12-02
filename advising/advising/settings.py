@@ -215,9 +215,15 @@ EXPORT_FORMATS = [CSV, XLSX]
 #     DEBUG = False
 #     #SECRET_KEY =  str(os.getenv('SECRET_KEY'))
 #     SECRET_KEY = values.SecretValue()
-#     #ALLOWED_HOSTS = ['localhost', '127.0.0.1'] doesn't work
+#     ALLOWED_HOSTS = ['localhost', '127.0.0.1'] doesn't work
 
 
 
 # python manage.py diffsettings --all
+
+#deployment
+SECURE_HSTS_SECONDS = 3600 #1hr
+SECURE_SSL_REDIRECT = True #only supports connection to our site via HTTPS, a far more secure option
+SESSION_COOKIE_SECURE = True #makes it more difficult for network traffic sniffers to steal the CSRF token
+
 
