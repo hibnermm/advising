@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.conf import settings
 from .models import Program, Course, ProgramCourses
-from .forms import CourseForm, ProgramForm, SearchProgramForm, UploadFixture
+from .forms import CourseForm, ProgramForm, ChecklistForm, SearchProgramForm, UploadFixture
 from django.http import HttpResponseRedirect, HttpResponse
 from django.views.generic import ListView
 from django.contrib import messages
@@ -133,6 +133,47 @@ def program_edit(request, pk=None):
             "instance": program,
         },
     )
+
+def course_edit(request, pk=None):
+    if pk is not None:
+        course = get_object_or_404(Course, pk=pk)
+    else:
+        course = None
+    if request.method == "POST":
+        form = CourseForm(request.POST, instance=course)
+        if form.is_valid():
+            updated_course = form.save()
+            if course is None:
+                messages.success(
+                    request, 'Course "{}" was created.'.format(updated_course)
+                )
+            else:
+                messages.success(
+                    request, 'Course "{}" was updated.'.format(updated_course)
+                )
+            return redirect("course_edit", updated_course.pk)
+    else:
+        form = CourseForm(instance=course)
+
+    return render(
+        request,
+        "checklist/instance_update.html",
+        {
+            "method": request.method,
+            "form": form,
+            "model_type": "Course",
+            "instance": course,
+        },
+    )
+
+def course_detail(request, pk):
+    course = get_object_or_404(Course, pk=pk)
+    programcourses_list = ProgramCourses.objects.select_related(
+        "programs", "courses"
+    ).all()
+
+    context = {"course": course, "programcourses_list": programcourses_list}
+    return render(request, "checklist/program_detail.html", context)
 
 
 # def upload_checklist(request):
@@ -331,3 +372,38 @@ def dashboard(request):
     #     yaxis_range=[0, 5])
     figcount = fig.to_html()
     return render(request, "checklist/dashboard.html", {'figcount': figcount})
+
+
+
+
+def checklist_edit(request, pk=None):
+    if pk is not None:
+        programcourses = get_object_or_404(ProgramCourses, pk=pk)
+    else:
+        programcourses = None
+    if request.method == "POST":
+        form = ChecklistForm(request.POST, instance=programcourses)
+        if form.is_valid():
+            updated_programcourses = form.save()
+            if course is None:
+                messages.success(
+                    request, 'ProgramCourses "{}" was created.'.format(updated_programcourses)
+                )
+            else:
+                messages.success(
+                    request, 'ProgramCourses "{}" was updated.'.format(updated_programcourses)
+                )
+            return redirect("checklist_edit", updated_programcourses.pk)
+    else:
+        form = ChecklistForm(instance=programcourses)
+
+    return render(
+        request,
+        "checklist/instance_update.html",
+        {
+            "method": request.method,
+            "form": form,
+            "model_type": "ProgramCourses",
+            "instance": programcourses,
+        },
+    )

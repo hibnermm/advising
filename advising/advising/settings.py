@@ -11,23 +11,24 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-from configurations import Configuration #, values
+# from configurations import Configuration
+from configurations import Configuration, values
 from dotenv import load_dotenv
 
 load_dotenv()
 import os
 
-#/import templates.BASE_DIR
+# import templates.BASE_DIR
 import dj_database_url
 
 
 
 # class Dev(Configuration):
 #     BASE_DIR = Path(__file__).resolve().parent.parent
-#     SECRET_KEY = str(os.getenv('SECRET_KEY'))
+#     SECRET_KEY = str(os.getenv("SECRET_KEY"))
 #     DEBUG = values.BooleanValue(True)
 #     ALLOWED_HOSTS = values.ListValue([])
-#     TIME_ZONE = values.Value('UTC')
+
 
     # ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]']
     #CommandError: You must set settings.ALLOWED_HOSTS if DEBUG is False., even with ['*']
@@ -42,7 +43,7 @@ If you're using batch (aka "cmd"), it's set DJANGO_SETTINGS_MODULE="your_value"
 
 
 """
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -53,9 +54,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = str(os.getenv("SECRET_KEY"))
 
-# SECURITY WARNING: don't run with debug turned on in production!
+
+# # SECURITY WARNING: don't run with debug turned on in production!
+# DEBUG = True
+# ALLOWED_HOSTS = []
+
+
 DEBUG = False
-ALLOWED_HOSTS = ['localhost', '127.0.0.1',"https://advisingtool.azurewebsites.net/"]
+ALLOWED_HOSTS = ["advisingtool.azurewebsites.net/", ".github.io/", '.herokuapp.com'] 
 
 # Application definition
 
@@ -67,6 +73,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    #"djangorestframework",
     "checklist",
     "debug_toolbar",
     "crispy_forms",
@@ -78,6 +85,7 @@ SITE_ID = 1
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -93,10 +101,10 @@ TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         #doesn't work, used when trying to make django-configs work
-        "DIRS": [BASE_DIR, "templates"],
+        # "DIRS": [BASE_DIR, "templates"],
         #base_dir not defined (see above) -> added in top of page templates.basedir
         #NameError: name 'BASE_DIR' is not defined
-        # "DIRS": [os.path.join(BASE_DIR, "templates")],
+        "DIRS": [os.path.join(BASE_DIR, "templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -104,7 +112,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                #"django.template.context_processors.media",
+                "django.template.context_processors.media",
             ],
         },
     },
@@ -205,25 +213,33 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 
 # import export
-from import_export.formats.base_formats import CSV, XLSX
+from import_export.formats.base_formats import CSV, XLSX, JSON
 
-IMPORT_FORMATS = [CSV, XLSX]
-EXPORT_FORMATS = [CSV, XLSX]
+IMPORT_FORMATS = [CSV, XLSX, JSON]
+EXPORT_FORMATS = [CSV, XLSX, JSON]
+
 
 
 # class Prod(Dev):
 #     DEBUG = False
 #     #SECRET_KEY =  str(os.getenv('SECRET_KEY'))
 #     SECRET_KEY = values.SecretValue()
-#     ALLOWED_HOSTS = ['localhost', '127.0.0.1'] doesn't work
 
 
 
 # python manage.py diffsettings --all
 
-#deployment
-SECURE_HSTS_SECONDS = 3600 #1hr
-SECURE_SSL_REDIRECT = True #only supports connection to our site via HTTPS, a far more secure option
-SESSION_COOKIE_SECURE = True #makes it more difficult for network traffic sniffers to steal the CSRF token
+#development
+# SECURE_SSL_REDIRECT=False
+# SESSION_COOKIE_SECURE=False
+# CSRF_COOKIE_SECURE=False
 
+# #deployment
+SECURE_HSTS_SECONDS = 3600 
+SECURE_SSL_REDIRECT = True 
+SESSION_COOKIE_SECURE = True 
+CSRF_COOKIE_SECURE = True
+#1hr
+#only supports connection to our site via HTTPS, a far more secure option
+#makes it more difficult for network traffic sniffers to steal the CSRF token
 

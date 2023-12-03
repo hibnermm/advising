@@ -27,3 +27,12 @@ from .settings import *
 
 
 # https://www.w3schools.com/django/django_deploy_requirements.php
+# -----> Building on the Heroku-22 stack
+# -----> Determining which buildpack to use for this app
+#  !     No default language could be detected for this app.
+# 			HINT: This occurs when Heroku cannot detect the buildpack to use for this application automatically.
+# 			See https://devcenter.heroku.com/articles/buildpacks
+#  !     Push failed
+
+
+

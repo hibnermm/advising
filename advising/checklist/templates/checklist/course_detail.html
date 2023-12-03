@@ -54,11 +54,6 @@
       {% endfor %}
     </tbody>
   </table>
-
-  {% if programcourse.programs == program %}
-  <h5>Update Program</h5>
-  <a href="{% url 'checklist-edit' program.id%}"><i class="bi bi-pen"></i></a>
-  {% endif %} {% comment %} wip {% endcomment %}
 </div>
 
 {% endblock %}

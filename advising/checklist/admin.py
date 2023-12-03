@@ -9,7 +9,9 @@ from checklist.resources import ProgramResource, CourseResource, ProgramCoursesR
 from import_export.admin import ImportExportModelAdmin  # ImportExportMixin
 from django.template.response import TemplateResponse
 from django.urls import path
-from .forms import UploadFixture
+from .forms import UploadFixture, CourseForm
+
+#https://realpython.com/customize-django-admin-python/#overriding-django-admin-templates
 
 
 # class csv_upload(forms.Form):
@@ -71,7 +73,14 @@ class ProgramCoursesAdmin(ImportExportModelAdmin):
 # class ModelAdmin.add_view(request, form_url=', extra_context=None'):
 #     pass
 
+#https://docs.djangoproject.com/en/4.2/ref/contrib/admin/
+
+
+
+
 class UploadFixture(admin.AdminSite):
+    course_form = CourseForm
+    
     def uploadfixture_view(self, request):
         request.checklist = self.name
         context = self.each_context(request)

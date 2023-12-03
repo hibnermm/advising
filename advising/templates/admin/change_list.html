@@ -1,7 +1,30 @@
 {% extends "admin/change_list.html" %} {% load static %} {% block content %}
+<div class="text-center">
+</div>
+
+</br>
+<div class="container">
+  
+  
+  
+  
+  
+</div>
+
 {% comment %}
 <button><a href="upload-csv/">Upload Courses</a></button>
 </br>
+
+
+<h1>Upload fixture</h1>
+<form method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+  <!-- {{form.as_p}} -->
+  <input type="file" name="file">
+  <button type="submit" class="btn btn-secondary">Submit</button>
+</form>
+
+
 {% endcomment %}
 {{block.super }} 
 {% endblock %}

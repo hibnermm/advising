@@ -10,10 +10,11 @@ https://docs.djangoproject.com/en/4.2/howto/deployment/asgi/
 import os
 
 
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "advising.settings")
+# os.environ.setdefault("DJANGO_CONFIGURATION", "DEV")
+
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "advising.settings")
-os.environ.setdefault("DJANGO_CONFIGURATION", "DEV")
 
 # from configurations.asgi import get_asgi_application  
 # doesn't work for django-configurations wip

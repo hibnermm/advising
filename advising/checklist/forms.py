@@ -22,6 +22,7 @@ class CourseForm(InstanceForm):
     class Meta:
         model = Course
         fields = "subj_abbrev", "no", "name", "hours"
+        #doesn't allow usage 
 
 
 class ProgramForm(InstanceForm):

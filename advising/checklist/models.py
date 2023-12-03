@@ -18,6 +18,7 @@ class Program(models.Model):
     spec_abbrev = models.CharField(
         max_length=20, verbose_name="Specialization abbreviation", blank=True
     )
+    image = models.ImageField(upload_to="images/", null=True)
 
     def __str__(self):
         return "{}: {} {}".format(self.level_abbrev, self.major, self.specialization)

@@ -12,6 +12,7 @@
         <th>Subject</th>
         <th>Course No.</th>
         <th>Course Title</th>
+        <th>Update Course</th>
       </tr>
       </thead>
       <tbody>
@@ -20,6 +21,8 @@
       <td>{{course.subj_abbrev}}</td> 
       <td>{{course.no}}</td>
       <td>{{course.name}}</td>
+      {% comment %}  {% endcomment %}
+      <td><a href="{% url 'course-edit' course.id%}"><i class="bi bi-pen"></i></a></td>
       {% endfor %}
     </tr>
     </tbody>
@@ -28,7 +31,7 @@
 </div>
 
 <div class="container">
-<a href="{% url 'program-new' %}"><button class="btn btn-secondary">Add New Program</button></a>
+<a href="{% url 'course-new' %}"><button class="btn btn-secondary">Add Course</button></a>
 
 <div class="text-center">
   <h5>
